@@ -1,0 +1,117 @@
+.catalogo-page {
+  padding: 180px 5% 100px;
+  background-color: #fff;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.catalogo-main-title {
+  font-family: 'Playfair Display', serif;
+  color: #D4AF37;
+  font-size: 3.5rem;
+  text-align: center;
+  letter-spacing: 15px;
+  margin-bottom: 60px;
+  text-transform: uppercase;
+}
+
+/* Berço das imagens para não ficarem quebradas */
+.produto-image-container, .mini-image-box {
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  border: 1px solid #eee;
+  position: relative;
+}
+
+.produto-image-container img, .mini-image-box img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+/* Grid e Itens */
+.grid-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.produto-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.produto-nome {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  margin: 15px 0 5px;
+  color: #333;
+}
+
+/* Botões Estilo Figma */
+.buy-btn, .ver-colecao-btn, .filtro-btn-marcas {
+  background-color: #D4AF37;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.buy-btn:hover {
+  background-color: #bfa032;
+  transform: translateY(-2px);
+}
+
+.prod-price {
+  border: 1px solid #D4AF37;
+  color: #D4AF37;
+  padding: 5px 15px;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* Modal de Produto */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content.product-view {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.modal-grid img {
+  width: 100%;
+  background: #f9f9f9;
+  border-radius: 15px;
+}

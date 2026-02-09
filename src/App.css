@@ -1,0 +1,31 @@
+/* src/App.css */
+/* Importe fontes aqui se não estiver no index.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+  --royal-gold: #D4AF37; /* Use o HEX exato do seu Figma aqui! */
+  --white: #ffffff;
+  --text-dark: #333333; /* Para textos de contraste */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif; /* Fonte para textos comuns */
+  background-color: var(--white);
+  color: var(--text-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif; /* Fonte elegante do seu design */
+  margin: 0;
+  padding: 0;
+}
+
+.royal-footer {
+  background-color: var(--royal-gold);
+  height: 150px; /* Altura do rodapé dourado */
+  margin-top: 100px; /* Espaço antes do rodapé */
+  width: 100%;
+} 

@@ -1,0 +1,46 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.product-name {
+  color: #D4AF37; /* Use o dourado exato do seu Figma */
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.product-image-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.product-image {
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.price-button {
+  background-color: transparent;
+  border: 1px solid #D4AF37;
+  color: #D4AF37;
+  padding: 8px 40px;
+  border-radius: 50px; /* Isso faz o formato oval/pílula */
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.price-button:hover {
+  background-color: #D4AF37;
+  color: white;
+}

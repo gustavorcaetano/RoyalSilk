@@ -1,0 +1,85 @@
+/* Overlay que escurece o fundo levemente */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  -webkit-backdrop-filter: blur(4px); /* Embaça o que está atrás do modal */
+  backdrop-filter: blur(4px); /* Embaça o que está atrás do modal */
+}
+
+/* O cartão de vidro */
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.4);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(212, 175, 55, 0.5); /* Borda dourada translúcida */
+  border-radius: 30px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  animation: modalEntrada 0.5s ease-out;
+}
+
+@keyframes modalEntrada {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-title {
+  font-family: serif;
+  font-style: italic;
+  color: #D4AF37; /* Dourado */
+  font-size: 2rem;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.modal-text {
+  color: #4a4a4a;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #D4AF37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.modal-action {
+  background: #1a1a1a;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-action:hover {
+  background: #D4AF37;
+}

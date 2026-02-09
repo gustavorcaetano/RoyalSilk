@@ -1,0 +1,19 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400&display=swap');
+
+:root {
+  --royal-gold: #D4AF37; /* Ajuste para o dourado exato do seu Figma */
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif; /* Fonte para textos comuns */
+  background-color: var(--white);
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif; /* Fonte elegante do seu design */
+}
