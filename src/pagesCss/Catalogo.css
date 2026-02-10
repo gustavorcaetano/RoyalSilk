@@ -303,3 +303,46 @@ font-weight: bolder; }
   border-bottom: 1px solid #1a1a1a;
   padding-bottom: 5px;
 }
+
+/* Resolve a sobreposição de textos no Swiper (Foto 4) */
+.mySwiper .swiper-slide {
+  opacity: 0 !important;
+  transition: opacity 0.5s ease-in-out;
+  background: #fff; /* Garante fundo limpo entre transições */
+}
+
+.mySwiper .swiper-slide-active {
+  opacity: 1 !important;
+}
+
+/* Garante que o título não fique "sujo" com o slide anterior */
+.slide-title {
+  background-color: white; 
+  display: inline-block;
+  padding: 0 10px;
+}
+
+/* Estilo para quando não há produtos (Foto 3 e 4) */
+.no-products {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 100px 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.no-products button {
+  margin-top: 20px;
+  background: #D4AF37;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Garante que a sidebar apareça */
+.filters-sidebar {
+  min-width: 200px;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
