@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importe no topo do arquivo
 import { motion, AnimatePresence } from 'framer-motion';
 import { colecoes } from '../data/colecoes';
 import '../componentsCss/ColecaoModal.css'; 
@@ -6,6 +7,16 @@ import '../componentsCss/ModelGrid.css';
 
 export const ModelGrid = () => {
   const [activeModal, setActiveModal] = useState(null);
+  const navigate = useNavigate(); // Inicialize aqui
+
+  const handleExplore = (colecaoId) => {
+    // Fecha o modal antes de navegar
+    setActiveModal(null); 
+    
+    // Navega para a rota do catálogo
+    // Você pode passar o ID como parâmetro ou via state para filtrar o catálogo automaticamente
+    navigate('/catalogo', { state: { filterId: colecaoId } });
+  };
 
   // Variantes para a animação de entrada dos cards (Cascata)
   const containerVariants = {
@@ -80,6 +91,7 @@ export const ModelGrid = () => {
                   className="modal-action-btn"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => handleExplore(activeModal.id)} // Adicione esta linha
                 >
                   Explorar Coleção
                 </motion.button>

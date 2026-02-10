@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // Adicionado useEffect
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectFade } from "swiper/modules";
 import { produtosCatalogo } from "../data/produtos";
@@ -11,8 +12,25 @@ import "swiper/css/effect-fade";
 import "../pagesCss/Catalogo.css";
 
 export const Catalogo = () => {
+  const location = useLocation(); // 1. Mover para o topo (antes do useState)
+  
   const [produtos] = useState(produtosCatalogo);
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+
+  // 2. Agora o location já existe e pode ser usado aqui
+  const [filtroAtivo, setFiltroAtivo] = useState(location.state?.filterId || 'todos');
+
+  // 3. Efeito para atualizar o filtro se o usuário navegar entre coleções sem fechar a página
+  useEffect(() => {
+    if (location.state?.filterId) {
+      setFiltroAtivo(location.state.filterId);
+    }
+  }, [location.state]);
+
+  // Filtra a lista com base no estado
+  const produtosFiltrados = filtroAtivo === 'todos' 
+    ? produtos 
+    : produtos.filter(p => p.colecaoId === filtroAtivo);
 
   const colecoesDestaque = [
     { id: 1, titulo: "COLEÇÃO LUMINA", desc: "A luz que sua pele merece.", produtos: produtos.slice(0, 3) },
@@ -42,7 +60,6 @@ export const Catalogo = () => {
                   </motion.h2>
                   <p className="slide-desc">{col.desc}</p>
                   
-                  {/* Fileira horizontal de produtos na roleta */}
                   <div className="slide-products-row">
                     {col.produtos.map((p) => (
                       <div key={p.id} className="mini-card-silk" onClick={() => setProdutoSelecionado(p)}>
@@ -56,7 +73,6 @@ export const Catalogo = () => {
             ))}
           </Swiper>
           
-          {/* Controles de texto minimalistas e próximos */}
           <div className="silk-controls">
             <span className="prev-silk silk-nav-text">ANTERIOR</span>
             <div className="control-separator"></div>
@@ -65,79 +81,57 @@ export const Catalogo = () => {
         </div>
       </section>
 
-      {/* ... restante do código anterior (Roleta e Header) ... */}
-
-<div className="amazon-layout-container">
-  {/* SIDEBAR RESTAURADA AO NORMAL */}
-  <aside className="filters-sidebar">
-    <div className="sidebar-section">
-      <h3 className="sidebar-title">FILTRAR POR</h3>
-      
-      <div className="filter-group">
-        <h4>CATEGORIA</h4>
-        <ul>
-          <li className="active">Todos</li>
-          <li>Batons</li>
-          <li>Olhos</li>
-          <li>Pele</li>
-          <li>Skin Care</li>
-        </ul>
-      </div>
-
-      <div className="filter-group">
-        <h4>PREÇO</h4>
-        <ul>
-          <li>Até R$ 150</li>
-          <li>R$ 150 - R$ 300</li>
-          <li>Acima de R$ 300</li>
-        </ul>
-      </div>
-
-      <div className="filter-group">
-        <h4>CORES</h4>
-        <div className="color-options-grid">
-          <span className="color-circle red"></span>
-          <span className="color-circle nude"></span>
-          <span className="color-circle gold"></span>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  {/* CONTEÚDO PRINCIPAL (GRID) */}
-  <main className="products-grid-main">
-    <div className="grid-header-info">
-      <span>{produtos.length} produtos encontrados</span>
-      <span className="sort-text-btn">ORDENAR POR ▾</span>
-    </div>
-
-    <div className="luxury-4-col-grid">
-      {produtos.map((p) => (
-        <div key={p.id} className="grid-product-card">
-          <div className="img-holder-silk">
-            <img src={p.img} alt={p.nome} />
-            <div className="overlay-silk" onClick={() => setProdutoSelecionado(p)}>
-              <span className="text-link-white">DETALHES</span>
+      <div className="amazon-layout-container">
+        <aside className="filters-sidebar">
+          <div className="sidebar-section">
+            <h3 className="sidebar-title">FILTRAR POR</h3>
+            
+            <div className="filter-group">
+              <h4>CATEGORIA</h4>
+              <ul>
+                <li 
+                  className={filtroAtivo === 'todos' ? 'active' : ''} 
+                  onClick={() => setFiltroAtivo('todos')}
+                  style={{ cursor: 'pointer' }}
+                >
+                  Todos
+                </li>
+                {/* Aqui você pode adicionar outros filtros manuais se desejar */}
+              </ul>
             </div>
           </div>
-          <div className="info-holder-silk">
-            <p className="p-brand">ROYAL SILK</p>
-            <h4>{p.nome}</h4>
-            <div className="p-footer-silk">
-              <span className="p-price">R$ {p.preco.toFixed(2)}</span>
-              {/* Mantendo seu botão favorito */}
-              <span className="add-cart-text" onClick={() => setProdutoSelecionado(p)}>+ ADICIONAR</span>
-            </div>
+        </aside>
+
+        <main className="products-grid-main">
+          <div className="grid-header-info">
+            <span>{produtosFiltrados.length} produtos encontrados</span>
+            <span className="sort-text-btn">ORDENAR POR ▾</span>
           </div>
-        </div>
-      ))}
-    </div>
-  </main>
-</div>
 
-{/* ... Modal mantido sem alterações ... */}
+          <div className="luxury-4-col-grid">
+            {/* 4. ALTERADO: Agora mapeamos os produtos FILTRADOS */}
+            {produtosFiltrados.map((p) => (
+              <div key={p.id} className="grid-product-card">
+                <div className="img-holder-silk">
+                  <img src={p.img} alt={p.nome} />
+                  <div className="overlay-silk" onClick={() => setProdutoSelecionado(p)}>
+                    <span className="text-link-white">DETALHES</span>
+                  </div>
+                </div>
+                <div className="info-holder-silk">
+                  <p className="p-brand">ROYAL SILK</p>
+                  <h4>{p.nome}</h4>
+                  <div className="p-footer-silk">
+                    <span className="p-price">R$ {p.preco.toFixed(2)}</span>
+                    <span className="add-cart-text" onClick={() => setProdutoSelecionado(p)}>+ ADICIONAR</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+      </div>
 
-      {/* MODAL DE COMPRA MASTER (RECALIBRADO) */}
       <AnimatePresence>
         {produtoSelecionado && (
           <motion.div className="modal-overlay-silk" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setProdutoSelecionado(null)}>
