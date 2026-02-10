@@ -20,11 +20,24 @@
 .mini-card-silk img { width: 100%; height: auto; transition: 0.4s; }
 .mini-card-silk:hover img { transform: translateY(-5px); }
 
+.slide-products-row .text-link-silk {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: #69530b;
+  display: block;
+  margin-top: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.slide-products-row .text-link-silk:hover { color: #1a1a1a;
+font-weight: bolder; }
+
 .text-link-silk {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.6rem;
   letter-spacing: 2px;
-  color: #D4AF37;
+  color: #745f1a;
   display: block;
   margin-top: 15px;
   text-decoration: underline;
