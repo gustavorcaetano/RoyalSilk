@@ -1,7 +1,7 @@
 .footer-container {
-  background-color: #f9f9f9; /* Ou use o dourado var(--royal-gold) se quiser ele todo colorido */
+  background-color: var(--black); /* Ou use o dourado var(--royal-gold) se quiser ele todo colorido */
   padding: 80px 5% 20px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #D4AF37;
 }
 
 .footer-content {
@@ -13,7 +13,7 @@
 }
 
 .footer-column h4 {
-  color: #333;
+  color: #D4AF37;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.9rem;
   letter-spacing: 2px;
@@ -33,7 +33,7 @@
 .footer-description {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #666;
+  color: var(--white);
 }
 
 .footer-column ul {
@@ -47,7 +47,7 @@
 
 .footer-column ul li a {
   text-decoration: none;
-  color: #666;
+  color: var(--white);
   font-size: 0.9rem;
   transition: color 0.3s;
 }
@@ -58,7 +58,7 @@
 
 .footer-column p {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--white);
   margin-bottom: 10px;
 }
 

@@ -5,6 +5,7 @@
 :root {
   --royal-gold: #D4AF37; /* Use o HEX exato do seu Figma aqui! */
   --white: #ffffff;
+  --black: #1a1a1a;
   --text-dark: #333333; /* Para textos de contraste */
 }
 
@@ -13,7 +14,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif; /* Fonte para textos comuns */
-  background-color: var(--white);
+  background-color: var(--black);
   color: var(--text-dark);
 }
 

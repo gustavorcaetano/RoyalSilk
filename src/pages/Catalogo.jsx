@@ -35,9 +35,9 @@ export const Catalogo = () => {
 
   // Dados das coleções para a roleta
   const colecoesDestaque = [
-    { id: 1, titulo: "COLEÇÃO LUMINA", desc: "A luz que sua pele merece.", itens: produtos.slice(0, 3) },
-    { id: 2, titulo: "TOQUE DE VELUDO", desc: "Texturas que abraçam o rosto.", itens: produtos.slice(1, 4) },
-    { id: 3, titulo: "ESSÊNCIA REAL", desc: "O segredo da beleza eterna.", itens: produtos.slice(0, 2) },
+    { id: 1, titulo: "L'OR ESSENTIAL ", desc: "A pureza do minimalismo encontra a nobreza do ouro.", itens: produtos.slice(0, 3) },
+    { id: 2, titulo: "HÉRITAGE DE SOIE", desc: "A essência da Royal Silk em sua forma mais pura.", itens: produtos.slice(1, 4) },
+    { id: 3, titulo: "VELOURS IMPÉRIAL", desc: "Onde o conforto encontra a opulência extrema.", itens: produtos.slice(0, 2) },
   ];
 
   return (

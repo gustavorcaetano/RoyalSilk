@@ -1,5 +1,5 @@
 /* --- RESET E BASES --- */
-.catalogo-master { padding: 120px 5% 80px; background: #fff; }
+.catalogo-master { padding: 120px 5% 80px; background: var(--black); }
 
 /* --- ROLETA EM FILEIRA E CONTROLES DE TEXTO --- */
 .swiper-custom-wrapper { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; }
@@ -24,20 +24,21 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 0.6rem;
   letter-spacing: 2px;
-  color: #69530b;
+  color: var(--white);
   display: block;
   margin-top: 15px;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-.slide-products-row .text-link-silk:hover { color: #1a1a1a;
+.slide-products-row .text-link-silk:hover { 
+color: #D4AF37; 
 font-weight: bolder; }
 
 .text-link-silk {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.6rem;
   letter-spacing: 2px;
-  color: #745f1a;
+  color: var(--white);
   display: block;
   margin-top: 15px;
   text-decoration: underline;
@@ -46,8 +47,13 @@ font-weight: bolder; }
 .slide-title {
   font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
-  color: #1a1a1a;
+  color: #D4AF37;
   margin-bottom: -10px;
+}
+.slide-desc {
+  font-size: 0.8rem;
+  color: var(--white);
+  margin-bottom: 30px;
 }
 /* Setas substituídas por textos próximos */
 .silk-controls {
@@ -62,13 +68,13 @@ font-weight: bolder; }
   font-family: 'Montserrat', sans-serif;
   font-size: 0.7rem;
   letter-spacing: 3px;
-  color: #1a1a1a;
+  color: var(--white);
   cursor: pointer;
   transition: 0.3s;
 }
 
 .silk-nav-text:hover { color: #D4AF37; }
-.control-separator { width: 1px; height: 15px; background: #eee; }
+.control-separator { width: 1px; height: 15px; background: var(--black); }
 
 /* --- GRID DE PRODUTOS --- */
 .luxury-4-col-grid {
@@ -79,7 +85,7 @@ font-weight: bolder; }
 
 .img-holder-silk {
   position: relative;
-  background: #fdfdfd;
+  background: var(--black);
   height: 280px;
   display: flex;
   align-items: center;
@@ -104,15 +110,16 @@ font-weight: bolder; }
 .text-link-white {
   font-size: 0.65rem;
   letter-spacing: 3px;
-  color: #1a1a1a;
-  border-bottom: 1px solid #1a1a1a;
+  color: var(--white);
+  border-bottom: 1px solid #fff;
   padding-bottom: 5px;
 }
 
 .add-cart-text {
   font-size: 0.7rem;
+  margin-left: 10px;
   letter-spacing: 1px;
-  color: #1a1a1a;
+  color: var(--white);
   cursor: pointer;
   font-weight: 600;
 }
@@ -123,7 +130,7 @@ font-weight: bolder; }
 .modal-overlay-silk {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.258);
+  background: rgba(0, 0, 0, 0.518);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   z-index: 10000;
@@ -133,10 +140,10 @@ font-weight: bolder; }
 }
 
 .modal-compact-container {
-  background: #fff;
+  background: var(--black);
   width: 90%;
   max-width: 800px; /* Tamanho reduzido */
-  border: 2px solid #f0f0f0;
+  border: 2px solid #D4AF37;
   padding: 50px;
   position: relative;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.44);
@@ -167,22 +174,23 @@ font-weight: bolder; }
 .modal-compact-img img { width: 100%; height: auto; }
 
 .modal-tag { font-size: 0.6rem; letter-spacing: 3px; color: #D4AF37; }
-.modal-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 15px 0; }
+.modal-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--white); margin: 15px 0; }
 .modal-text-desc { font-size: 0.85rem; line-height: 1.6; color: #777; margin-bottom: 25px; }
-.modal-price-silk { font-size: 1.5rem; color: #1a1a1a; display: block; margin-bottom: 30px; }
+.modal-price-silk { font-size: 1.5rem; color: var(--white); display: block; margin-bottom: 30px; }
 
 .btn-text-buy {
   font-size: 0.75rem;
   letter-spacing: 4px;
   color: #fff;
   background: #1a1a1a;
+  border: 2px solid #D4AF37;
   padding: 18px 40px;
   cursor: pointer;
   transition: 0.4s;
   display: inline-block;
 }
 
-.btn-text-buy:hover { background: #D4AF37; }
+.btn-text-buy:hover { background: #D4AF37; color: var(--black); }
 
 
 /* Container que divide Sidebar e Grid */
@@ -216,7 +224,7 @@ font-weight: bolder; }
 .filter-group h4 {
   font-size: 0.65rem;
   letter-spacing: 1.5px;
-  color: #1a1a1a;
+  color: var(--white);
   margin-bottom: 15px;
   font-weight: 700;
   text-transform: uppercase;
@@ -229,14 +237,14 @@ font-weight: bolder; }
 
 .filter-group li {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--white);
   margin-bottom: 10px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .filter-group li:hover, .filter-group li.active {
-  color: #1a1a1a;
+  color: #D4AF37;
   padding-left: 5px;
 }
 
@@ -268,11 +276,11 @@ font-weight: bolder; }
   align-items: center;
   margin-bottom: 30px;
   font-size: 0.8rem;
-  color: #999;
+  color: var(--white);
 }
 
 .sort-text-btn {
-  color: #1a1a1a;
+  color: var(--white);
   cursor: pointer;
   font-weight: 600;
   letter-spacing: 1px;
@@ -308,7 +316,7 @@ font-weight: bolder; }
 .mySwiper .swiper-slide {
   opacity: 0 !important;
   transition: opacity 0.5s ease-in-out;
-  background: #fff; /* Garante fundo limpo entre transições */
+  background: var(--black); /* Garante fundo limpo entre transições */
 }
 
 .mySwiper .swiper-slide-active {
@@ -317,7 +325,7 @@ font-weight: bolder; }
 
 /* Garante que o título não fique "sujo" com o slide anterior */
 .slide-title {
-  background-color: white; 
+  background-color: var(--black); 
   display: inline-block;
   padding: 0 10px;
 }

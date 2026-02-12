@@ -7,24 +7,24 @@ export const colecoes = [
     id: 1,
     img: model1,
     gridTitle: "O QUE",
-    modalTitle: "COLEÇÃO LUMINA",
-    subTitle: "BRILHO ATEMPORAL",
-    desc: "A radiância natural da sua pele elevada ao nível máximo de sofisticação com acabamento glow."
+    modalTitle: "L'OR ESSENTIEL",
+    subTitle: "O OURO ESSENCIAL",
+    desc: "A pureza do minimalismo encontra a nobreza do ouro. Fórmulas inteligentes que realçam sua luz natural com sofisticação."
   },
   {
     id: 2,
     img: model2,
     gridTitle: "SUA PELE",
-    modalTitle: "ÉBANO REAL",
-    subTitle: "INTENSIDADE PROFUNDA",
-    desc: "Pigmentação rica e hidratação luxuosa para uma pele impecável e traços destacados."
+    modalTitle: "HÉRITAGE DE SOIE",
+    subTitle: "HERANÇA DA SEDA",
+    desc: "A essência da Royal Silk em sua forma mais pura. Texturas sensoriais que fundem a ciência do cuidado com a alta performance."
   },
   {
     id: 3,
     img: model3,
     gridTitle: "PRECISA",
-    modalTitle: "ELEGÂNCIA CLÁSSICA",
-    subTitle: "ESSÊNCIA DE SEDA",
-    desc: "O equilíbrio perfeito entre a neutralidade chic e o luxo cotidiano em tons de alta performance."
+    modalTitle: "VELOURS IMPÉRIAL",
+    subTitle: "VELUDO IMPERIAL",
+    desc: "Onde o conforto encontra a opulência extrema. Pigmentos intensos e acabamento mate acetinado para uma presença majestosa."
   }
 ];

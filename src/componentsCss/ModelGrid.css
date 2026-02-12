@@ -3,7 +3,7 @@
   padding: 120px 5%;
   display: flex;
   justify-content: center;
-  background-color: #fff;
+  background-color: var(--black);
   overflow: hidden;
 }
 

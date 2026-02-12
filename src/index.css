@@ -4,6 +4,7 @@
 :root {
   --royal-gold: #D4AF37; /* Ajuste para o dourado exato do seu Figma */
   --white: #ffffff;
+  --black: #1a1a1a;
 }
 
 body {
@@ -11,7 +12,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif; /* Fonte para textos comuns */
-  background-color: var(--white);
+  background-color: var(--black);
 }
 
 h1, h2, h3 {
