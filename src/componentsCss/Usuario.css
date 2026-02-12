@@ -1,0 +1,31 @@
+:root {
+  /* TEMA ESCURO (O que você tem agora) */
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --card-bg: #252525;
+  --gold: #D4AF37;
+}
+
+[data-theme='light'] {
+  /* TEMA CLARO (O que estava antes) */
+  --bg-color: #ffffff;
+  --text-color: #1a1a1a;
+  --card-bg: #f9f9f9;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: var(--user-font-size);
+  transition: all 0.3s ease;
+}
+
+/* Estilo dos botões de texto que você gostou */
+.btn-gold-text {
+  color: var(--gold);
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 5px;
+}
