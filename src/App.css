@@ -7,7 +7,10 @@
   --white: #ffffff;
   --black: #1a1a1a;
   --text-dark: #333333; /* Para textos de contraste */
+  
 }
+.app-tema-escuro { background-color: #000000; color: #ffffff; }
+.app-tema-claro { background-color: #ffffff; color: #000000; }
 
 body {
   margin: 0;
