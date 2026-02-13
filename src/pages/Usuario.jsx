@@ -1,15 +1,13 @@
-// service_be82pnn -> Service ID
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import "../componentsCss/Usuario.css";
 
 export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) => {
   const [estaLogado, setEstaLogado] = useState(false);
-  const [abaAtual, setAbaAtual] = useState("login"); // login, cadastro, perfil, config
+  const [abaAtual, setAbaAtual] = useState("login");
   const [user, setUser] = useState({ nome: "", email: "", cep: "", nascimento: "", cartao: "" });
 
-  // Função para disparar o e-mail que configuramos
   const enviarBoasVindas = (nome, email) => {
     const templateParams = {
       user_name: nome,
@@ -21,8 +19,8 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
       'service_be82pnn', 
       'template_4bochio', 
       templateParams, 
-      'y3Tnpbz2zKLZfn-G7'
-    ).then(() => console.log("E-mail de boas-vindas enviado!"));
+      'y3Tnpbz2zKLZfn-G7' 
+    ).then(() => console.log("E-mail Royal Silk enviado com sucesso!"));
   };
 
   const handleCadastro = (e) => {
@@ -35,7 +33,21 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
   if (!estaLogado) {
     return (
       <div className="usuario-container">
-        <div className="auth-card">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }} 
+          animate={{ opacity: 1, y: 0 }}
+          className="logo-container"
+        >
+          <img src="https://raw.githubusercontent.com/gustavorcaetano/RoyalSilk/main/src/assets/ROYALSILK.png" alt="Logo" className="logo-auth" />
+          <h1 className="logo-text">Royal Silk</h1>
+          <p className="logo-subtitle">O PODER DA BELEZA REAL</p>
+        </motion.div>
+
+        <motion.div 
+          className="auth-card"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
           <div className="auth-tabs">
             <span onClick={() => setAbaAtual("login")} className={abaAtual === "login" ? "active" : ""}>LOGIN</span>
             <span onClick={() => setAbaAtual("cadastro")} className={abaAtual === "cadastro" ? "active" : ""}>CADASTRO</span>
@@ -53,10 +65,10 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
             <input type="password" placeholder="SENHA" required />
             
             <button type="submit" className="btn-gold-silk">
-              {abaAtual === "login" ? "ENTRAR" : "CRIAR CONTA"}
+              {abaAtual === "login" ? "ENTRAR NA REALEZA" : "CRIAR CONTA REAL"}
             </button>
           </form>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -73,7 +85,7 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
       <main className="content-perfil">
         {abaAtual === "perfil" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2>BEM-VINDO, {user.nome.toUpperCase()}</h2>
+            <h2 className="perfil-title">BEM-VINDO, {user.nome.toUpperCase()}</h2>
             <div className="info-box">
               <p><strong>E-MAIL:</strong> {user.email}</p>
               <p><strong>CEP:</strong> {user.cep}</p>
@@ -84,10 +96,10 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
 
         {abaAtual === "pagamento" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2>MÉTODOS DE PAGAMENTO</h2>
+            <h2 className="perfil-title">MÉTODOS DE PAGAMENTO</h2>
             <div className="card-box">
               <p>CARTÃO ATUAL: {user.cartao || "NENHUM CADASTRADO"}</p>
-              <input type="text" placeholder="NÚMERO DO CARTÃO" onChange={(e) => setUser({...user, cartao: e.target.value})} />
+              <input type="text" className="input-gold" placeholder="NÚMERO DO CARTÃO" onChange={(e) => setUser({...user, cartao: e.target.value})} />
               <p className="pix-label">OPÇÃO PIX ATIVA ✓</p>
             </div>
           </motion.div>
@@ -95,17 +107,21 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
 
         {abaAtual === "config" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2>ACESSIBILIDADE E TEMA</h2>
-            <div className="config-item">
-              <p>TAMANHO DA FONTE</p>
-              <button onClick={() => setFontSize(fontSize + 2)}>+</button>
-              <button onClick={() => setFontSize(fontSize - 2)}>-</button>
-            </div>
-            <div className="config-item">
-              <p>TEMA DO SITE</p>
-              <button onClick={() => setTemaEscuro(!temaEscuro)}>
-                MUDAR PARA MODO {temaEscuro ? "CLARO" : "ESCURO"}
-              </button>
+            <h2 className="perfil-title">ACESSIBILIDADE</h2>
+            <div className="config-container">
+              <div className="config-item">
+                <p>TAMANHO DA FONTE: {fontSize}px</p>
+                <div className="btn-group">
+                  <button onClick={() => setFontSize(fontSize + 2)}>+</button>
+                  <button onClick={() => setFontSize(fontSize - 2)}>-</button>
+                </div>
+              </div>
+              <div className="config-item">
+                <p>TEMA DO SITE</p>
+                <button className="btn-theme-toggle" onClick={() => setTemaEscuro(!temaEscuro)}>
+                  MODO {temaEscuro ? "CLARO" : "ESCURO"}
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

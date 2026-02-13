@@ -43,7 +43,13 @@ export const Navbar = () => {
             CATÁLOGO
           </Link>
         </div>
-        <img className="nav-icons hide-on-mobile" src={storeIcon} alt="Store" />
+        <Link to="/usuario" className="nav-icon-link">
+          <img
+            src={storeIcon} className="nav-icons"
+            alt="Carrinho"
+            style={{ width: "24px", cursor: "pointer" }}
+          />
+        </Link>
 
         {/* LOGO */}
         <div className="nav-logo">
@@ -55,7 +61,7 @@ export const Navbar = () => {
         {/* LADO DIREITO */}
         <Link to="/usuario" className="nav-icon-link">
           <img
-            src={userIcon}
+            src={userIcon} className="nav-icons"
             alt="Minha Conta"
             style={{ width: "24px", cursor: "pointer" }}
           />

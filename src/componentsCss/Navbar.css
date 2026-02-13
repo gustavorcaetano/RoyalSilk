@@ -45,6 +45,14 @@
   white-space: nowrap;
   transition: all 0.4s ease;
 }
+.nav-compact .nav-icons{
+  display: none;
+}
+.nav-compact:hover .nav-icons{
+  display: flex;
+  width: 0;
+  opacity: 1;
+}
 
 /* REAPARECER COM TYPING NO HOVER */
 .nav-compact:hover .hide-on-mobile {
