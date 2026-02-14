@@ -4,6 +4,7 @@
 
 :root {
   --royal-gold: #D4AF37; /* Use o HEX exato do seu Figma aqui! */
+  --gold: #D4AF37;
   --white: #ffffff;
   --black: #1a1a1a;
   --text-dark: #333333; /* Para textos de contraste */
@@ -11,6 +12,31 @@
 }
 .app-tema-escuro { background-color: #000000; color: #ffffff; }
 .app-tema-claro { background-color: #ffffff; color: #000000; }
+
+/* TEMA ESCURO (Padrao Royal Silk) */
+:root, [data-theme='dark'] {
+  --bg-principal: #0a0a0a;
+  --bg-card: #111111;
+  --texto-principal: #ffffff;
+  --texto-secundario: #888888;
+  --borda-dourada: rgba(212, 175, 55, 0.3);
+  --gold: #D4AF37;
+}
+
+/* TEMA CLARO */
+[data-theme='light'] {
+  --bg-principal: #ffffff;
+  --bg-card: #f5f5f5;
+  --texto-principal: #1a1a1a;
+  --texto-secundario: #555555;
+  --borda-dourada: rgba(212, 175, 55, 0.6);
+}
+
+/* Aplicação automática no container principal */
+.app-main-wrapper {
+  background-color: var(--bg-principal);
+  color: var(--texto-principal);
+}
 
 body {
   margin: 0;
