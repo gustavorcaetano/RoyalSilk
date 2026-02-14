@@ -16,7 +16,7 @@
 
 .cta-logo-top {
   width: 150px;
-  margin-bottom: 20px;
+  margin-bottom: -20px;
   /* Suaviza a logo dependendo do fundo */
   filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
 }
