@@ -84,6 +84,12 @@
   /* Filtro para inverter cor do ícone no tema claro se necessário */
   filter: var(--icon-filter); 
 }
+.nav-icon-link{
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  transition: infinite 3s all;
+}
 
 
 
@@ -105,6 +111,9 @@
 
 .nav-text-container:hover {
   background: rgba(212, 175, 55, 0.1);
+  padding: 8px;
+  border: 2px solid  var(--borda-dourada);
+  transition: infinite 2s all;
 }
 
 
@@ -112,6 +121,11 @@
   padding: 8px;
   border: 2px solid var(--borda-dourada);
   background-color: rgba(212, 175, 55, 0.1);;
+  border-radius: 50px;
+  transition: infinite 3s ease;
+}
+.nav-link-text:hover{
+  padding: 8px;
   border-radius: 50px;
   transition: infinite 3s ease;
 }

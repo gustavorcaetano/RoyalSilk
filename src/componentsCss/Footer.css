@@ -1,6 +1,6 @@
 .footer-container {
   /* Segue o tema global */
-  background-color: var(--bg-principal); 
+  background-color: var(--fundo-footer); 
   padding: 80px 5% 40px;
   border-top: 1px solid var(--gold);
   transition: background-color 0.5s ease, color 0.5s ease;
