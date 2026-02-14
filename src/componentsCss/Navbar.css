@@ -52,6 +52,14 @@
   width: auto;
   opacity: 1;
 }
+.nav-compact .nav-icon-link{
+  display: none;
+  opacity: 0;
+}
+.nav-compact:hover .nav-icon-link{
+  display: flex;
+  opacity: 1;
+}
 
 /* --- ELEMENTOS --- */
 .nav-link-text {
@@ -77,6 +85,8 @@
   filter: var(--icon-filter); 
 }
 
+
+
 .royal-silk-text-under {
   color: var(--gold);
   font-size: 0.7rem;
@@ -97,8 +107,13 @@
   background: rgba(212, 175, 55, 0.1);
 }
 
-.nav-icons:hover {
-  transform: scale(1.2);
+
+.nav-icon-link:hover{
+  padding: 8px;
+  border: 2px solid var(--borda-dourada);
+  background-color: rgba(212, 175, 55, 0.1);;
+  border-radius: 50px;
+  transition: infinite 3s ease;
 }
 
 /* --- RESPONSIVIDADE (MOBILE) --- */
