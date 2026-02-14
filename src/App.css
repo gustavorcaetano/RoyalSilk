@@ -17,7 +17,7 @@
 :root, [data-theme='dark'] {
   --bg-principal: #0a0a0a;
   --bg-card: #111111;
-  --texto-principal: #ffffff;
+  --texto-principal: #fff;
   --texto-secundario: #888888;
   --borda-dourada: rgba(212, 175, 55, 0.3);
   --gold: #D4AF37;
@@ -25,7 +25,7 @@
 
 /* TEMA CLARO */
 [data-theme='light'] {
-  --bg-principal: #ffffff;
+  --bg-principal: #fff;
   --bg-card: #f5f5f5;
   --texto-principal: #1a1a1a;
   --texto-secundario: #555555;

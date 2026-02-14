@@ -1,9 +1,10 @@
 .final-cta-section {
   padding: 120px 20px;
-  background-color: var(--black);
+  background-color: var(--bg-principal); /* Agora segue o tema */
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.5s ease;
 }
 
 .cta-content {
@@ -14,26 +15,27 @@
 }
 
 .cta-logo-top {
-  width: 150px; /* Tamanho da flor dourada */
-  margin-bottom: 0px;
+  width: 150px;
+  margin-bottom: 20px;
+  /* Suaviza a logo dependendo do fundo */
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
 }
 
-/* O segredo para as palavras uma embaixo da outra */
 .brand-name-stacked {
   display: flex;
-  flex-direction: column; /* Força o empilhamento */
+  flex-direction: column;
   font-family: 'Playfair Display', serif;
-  color: var(--royal-gold, #D4AF37);
-  font-size: 8rem; /* Tamanho GRANDE como você pediu */
+  color: var(--gold); /* Sempre dourado */
+  font-size: 8rem;
   font-weight: 700;
-  line-height: 0.85; /* Aproxima as palavras para um visual de grife */
+  line-height: 0.85;
   letter-spacing: 8px;
   margin-bottom: 20px;
 }
 
 .cta-slogan {
   font-family: 'Montserrat', sans-serif;
-  color: var(--royal-gold, #D4AF37);
+  color: var(--gold);
   font-size: 1.5rem;
   letter-spacing: 4px;
   font-weight: 500;
@@ -42,15 +44,16 @@
 }
 
 .cta-button-final {
-  margin-top: 140px;
-  background-color: var(--royal-gold, #D4AF37);
-  color: white;
+  margin-top: 60px; /* Ajustado para não ficar longe demais */
+  background-color: var(--gold);
+  color: #000; /* Texto preto para melhor leitura no botão dourado */
   border: none;
   padding: 18px 70px;
   border-radius: 50px;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   font-size: 1rem;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
@@ -58,17 +61,21 @@
 
 .cta-button-final:hover {
   transform: scale(1.05);
-  background-color: #b8952e;
-  box-shadow: 0 12px 25px rgba(212, 175, 55, 0.3);
+  background-color: #f1d279; /* Um dourado mais brilhante no hover */
+  box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
 }
 
-/* Responsividade para telas menores */
+/* Responsividade */
 @media (max-width: 768px) {
   .brand-name-stacked {
     font-size: 4rem;
+    letter-spacing: 4px;
   }
   .cta-slogan {
     font-size: 0.9rem;
     letter-spacing: 2px;
+  }
+  .cta-logo-top {
+    width: 100px;
   }
 }

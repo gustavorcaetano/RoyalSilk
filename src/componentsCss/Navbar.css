@@ -4,40 +4,42 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: 0.5s ease;
-  z-index: 9999; /* Valor altíssimo para ficar na frente de modais e hero */
+  width: auto; /* Deixe auto para não ocupar a tela toda se não precisar */
+  background: transparent; /* GARANTE QUE NÃO HAJA FAIXA PRETA NO TOPO */
 }
 
 .nav-capsule {
   display: flex;
   align-items: center;
   gap: 30px;
-  background: rgba(255, 255, 255, 0.2);
+  /* Melhorei o background para aceitar o tema claro */
+  background: var(--nav-bg, rgba(255, 255, 255, 0.1)); 
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
-  border: 3px solid rgba(212, 175, 55, 0.431);
-  box-shadow: rgba(50, 50, 93, 0.083) 0px 50px 100px -20px, rgba(0, 0, 0, 0.255) 0px 30px 60px -30px;
+  border: 1px solid var(--borda-dourada);
+  /* Sombra mais suave para o modo claro */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
   padding: 12px 45px;
   border-radius: 50px;
+  transition: all 0.5s ease;
 }
 
-
-
-/* Esconder links e textos dos ícones no scroll */
-/* --- ESTADO COMPACTO (A MÁGICA AQUI) --- */
+/* --- ESTADO COMPACTO (AO DAR SCROLL) --- */
 .nav-compact .nav-capsule {
-  padding: 5px 25px;
-  background: rgba(255, 255, 255, 0.451);
-  transition: all 0.6s ease;
-  gap: 15px; /* Encurta a distância no scroll */
-  box-shadow: rgba(50, 50, 93, 0.083) 0px 50px 100px -20px, rgba(0, 0, 0, 0.255) 0px 30px 60px -30px;
+  padding: 8px 25px;
+  gap: 15px;
+  /* No scroll, o vidro fica um pouco mais opaco para leitura */
+  background: var(--nav-bg-compact, rgba(255, 255, 255, 0.2));
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Esconde textos no scroll */
+/* O resto do seu CSS (Links, Logos, Ícones) está correto e pode continuar igual */
+
 .nav-compact .hide-on-mobile {
   width: 0;
   opacity: 0;
@@ -45,209 +47,91 @@
   white-space: nowrap;
   transition: all 0.4s ease;
 }
-.nav-compact .nav-icons{
-  display: none;
-}
-.nav-compact:hover .nav-icons{
-  display: flex;
-  width: 0;
-  opacity: 1;
-}
 
-/* REAPARECER COM TYPING NO HOVER */
 .nav-compact:hover .hide-on-mobile {
   width: auto;
   opacity: 1;
-  transition: all 0.6s ease;
 }
 
-.nav-compact:hover .typing-text {
-  display: inline-block;
-  overflow: hidden;
-  transition: all 0.6s ease;
-  animation: typing 1.6s steps(20, end);
-}
 /* --- ELEMENTOS --- */
 .nav-link-text {
-  color: #D4AF37;
+  color: var(--gold);
   text-decoration: none;
   font-weight: bold;
   letter-spacing: 2px;
   font-size: 0.8rem;
-  white-space: nowrap; /* Impede o texto de quebrar linha durante a animação */
+  white-space: nowrap;
 }
 
-.logo-img-inside { height: 40px; transition: 0.3s; }
-.nav-icons { height: 22px; cursor: pointer; }
+.logo-img-inside { 
+  height: 40px; 
+  transition: 0.3s; 
+  /* Filtro para a logo não sumir no fundo branco (opcional) */
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
+}
+
+.nav-icons { 
+  height: 22px; 
+  cursor: pointer; 
+  /* Filtro para inverter cor do ícone no tema claro se necessário */
+  filter: var(--icon-filter); 
+}
+
 .royal-silk-text-under {
-  color: #D4AF37;
+  color: var(--gold);
   font-size: 0.7rem;
   letter-spacing: 6px;
   margin-top: 10px;
   transition: 0.3s;
-}
-/* --- LÓGICA DO TYPING NO SCROLL --- */
-.nav-text-container {
-  display: inline-block;
-  overflow: hidden;
-  max-width: 200px; /* Largura máxima do texto */
-  transition: max-width 1.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
-}
-.nav-compact:hover .nav-text-container {
-  max-width: 150px;
-  opacity: 1;
+  text-transform: uppercase;
 }
 
-.nav-text-container.typing-text {
-  animation: typing 1.6s steps(20, end);
-}
-.nav-text-container.typing-text::after {
-  content: '';
-  border-right: 2px solid #D4AF37;
-  margin-left: 5px;
-  animation: blink-caret 0.7s step-end infinite;
-}
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: #D4AF37; }
-}
-.nav-text-container.no-typing::after {
-  content: none;
-}
+/* --- HOVERS --- */
 .nav-text-container {
-  padding: 3px 8px;
-  transition: all 0.3s ease;
-  border-radius: 20px;
-  border: 2px solid transparent;
-}
-.nav-text-container:hover{
   padding: 5px 10px;
-  background: rgba(212, 175, 55, 0.1);
-  border-radius: 20px;
-  border: 2px solid rgba(212, 175, 55, 0.3);
   transition: all 0.3s ease;
+  border-radius: 20px;
+}
 
+.nav-text-container:hover {
+  background: rgba(212, 175, 55, 0.1);
 }
-.nav-icons {
-  transition: transform 0.3s ease;
-  border-radius: 50%;
-  padding: 3px;
-}
+
 .nav-icons:hover {
   transform: scale(1.2);
-  transition: transform 0.3s ease;
-  padding: 5px;
-  border-radius: 50%;
-  background: rgba(212, 175, 55, 0.1);
-  border: 2px solid rgba(212, 175, 55, 0.3);
-}
-.nav-icon-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  transition: opacity 0.3s ease;
 }
 
-.nav-icon-link:hover {
-  opacity: 0.7; /* Dá um efeito suave de clique */
-}
+/* --- RESPONSIVIDADE (MOBILE) --- */
+.mobile-only { display: none; }
 
-
-/* --- ESCONDER ELEMENTOS MOBILE NO DESKTOP --- */
-.mobile-only {
-  display: none;
-}
-
-/* --- RESPONSIVIDADE (CELULAR) --- */
 @media (max-width: 768px) {
+  .hide-on-mobile { display: none !important; }
+  .mobile-only { display: flex; }
   
-  /* Esconde o que é do Computador */
-  .hide-on-mobile {
-    display: none !important;
-  }
-
-  /* Mostra o que é do Celular */
-  .mobile-only {
-    display: flex;
-  }
-
-  .navbar-container {
-    width: 90%;
-  }
-
-  /* Hambúrguer na Esquerda */
   .hamburger-btn {
     position: absolute;
     left: 10px;
     top: 15px;
-    background-color: white;
-    padding: 10px; ;
-    border: none;
+    background: var(--bg-card);
+    border: 1px solid var(--borda-dourada);
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
     flex-direction: column;
-    gap: 5px;
-    z-index: 1100;
+    gap: 4px;
   }
-  .bar { width: 22px; height: 2px; background: #D4AF37; transition: 0.3s; }
-  .nav-capsule { padding: 10px 15px; width: 70px; justify-content: center; }
 
-  /* MENU ABERTO (Fullscreen) */
+  .bar { width: 20px; height: 2px; background: var(--gold); transition: 0.3s; }
+
   .nav-capsule.mobile-open {
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100vh;
     border-radius: 0;
-    background: white;
+    background: var(--bg-principal);
     flex-direction: column;
-    justify-content: flex-start;
-    overflow: hidden;
-    padding-top: 50px;
+    padding-top: 80px;
+    gap: 40px;
   }
-  /* Header do Menu Mobile (Preenchendo o branco) */
-  .mobile-menu-header {
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 50px;
-  }
-  .mobile-header-logo { height: 50px; margin-bottom: 10px; }
-  .mobile-header-text { 
-    color: #D4AF37; 
-    letter-spacing: 5px; 
-    font-size: 1.2rem; 
-    font-weight: 300;
-  }
-
-  .mobile-menu-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-  }
-
-  .mobile-menu-content a {
-    color: #D4AF37;
-    font-size: 2rem;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .mobile-menu-icons {
-    display: flex;
-    gap: 30px;
-  }
-
-  .mobile-menu-icons img {
-    height: 40px;
-  }
-
-  /* Transformar em X */
-  .bar.open:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .bar.open:nth-child(2) { opacity: 0; }
-  .bar.open:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-}
-
-/* --- ANIMAÇÃO TYPING (DESKTOP) --- */
-@keyframes typing {
-  from { width: 0; opacity: 0; }
-  to { width: 100%; opacity: 1; }
 }

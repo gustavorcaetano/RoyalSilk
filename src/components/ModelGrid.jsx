@@ -1,30 +1,21 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importe no topo do arquivo
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { colecoes } from '../data/colecoes';
-import '../componentsCss/ColecaoModal.css'; 
 import '../componentsCss/ModelGrid.css';
 
 export const ModelGrid = () => {
   const [activeModal, setActiveModal] = useState(null);
-  const navigate = useNavigate(); // Inicialize aqui
+  const navigate = useNavigate();
 
   const handleExplore = (colecaoId) => {
-    // Fecha o modal antes de navegar
     setActiveModal(null); 
-    
-    // Navega para a rota do catálogo
-    // Você pode passar o ID como parâmetro ou via state para filtrar o catálogo automaticamente
     navigate('/catalogo', { state: { filterId: colecaoId } });
   };
 
-  // Variantes para a animação de entrada dos cards (Cascata)
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.3 }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.3 } }
   };
 
   const itemVariants = {
@@ -39,7 +30,7 @@ export const ModelGrid = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
       >
         {colecoes.map((col, index) => (
           <motion.div 
@@ -50,8 +41,8 @@ export const ModelGrid = () => {
             <motion.div 
               className="model-card" 
               onClick={() => setActiveModal(col)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.4 }}
             >
               <img src={col.img} alt={col.gridTitle} className="model-image" />
               <div className="modelo-info-overlay">
@@ -63,7 +54,6 @@ export const ModelGrid = () => {
         ))}
       </motion.div>
 
-      {/* AnimatePresence gerencia a saída do modal da árvore do DOM */}
       <AnimatePresence>
         {activeModal && (
           <motion.div 
@@ -75,10 +65,9 @@ export const ModelGrid = () => {
           >
             <motion.div 
               className="modal-content-glass" 
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
               <button className="close-btn" onClick={() => setActiveModal(null)}>×</button>
@@ -89,9 +78,9 @@ export const ModelGrid = () => {
                 <p className="modal-text">{activeModal.desc}</p>
                 <motion.button 
                   className="modal-action-btn"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, letterSpacing: "4px" }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => handleExplore(activeModal.id)} // Adicione esta linha
+                  onClick={() => handleExplore(activeModal.id)}
                 >
                   Explorar Coleção
                 </motion.button>

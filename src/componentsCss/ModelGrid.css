@@ -3,7 +3,8 @@
   padding: 120px 5%;
   display: flex;
   justify-content: center;
-  background-color: var(--black);
+  background-color: var(--bg-principal); /* Adaptável */
+  transition: background-color 0.5s ease;
   overflow: hidden;
 }
 
@@ -24,7 +25,7 @@
   flex: 1;
 }
 
-/* --- POSICIONAMENTO ASSIMÉTRICO (IGUAL AO FIGMA) --- */
+/* --- POSICIONAMENTO ASSIMÉTRICO --- */
 .pos-0 { margin-top: 80px; }  
 .pos-1 { margin-top: 0px; }   
 .pos-2 { margin-top: 150px; } 
@@ -34,14 +35,14 @@
   width: 100%;
   border-radius: 40px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
   cursor: pointer;
   position: relative;
-  /* Altura base para os cards */
   height: 480px; 
+  background-color: var(--bg-card);
 }
 
-.pos-1 .model-card { height: 550px; } /* Card central mais alto */
+.pos-1 .model-card { height: 550px; }
 
 .model-image {
   width: 100%;
@@ -50,15 +51,11 @@
   transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
-.model-card:hover .model-image {
-  transform: scale(1.1);
-}
-
 /* --- OVERLAY NO HOVER --- */
 .modelo-info-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(212, 175, 55, 0.2); /* Dourado translúcido */
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   display: flex;
@@ -73,34 +70,35 @@
 }
 
 .modelo-label {
-  color: white;
+  color: #fff;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 3px;
-  border: 1px solid white;
+  border: 1px solid #fff;
   padding: 12px 25px;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem;
 }
 
-/* --- TEXTO ABAIXO --- */
+/* --- TEXTO ABAIXO (CAPTION) --- */
 .model-caption {
   font-family: 'Playfair Display', serif;
-  color: #D4AF37;
+  color: var(--gold);
   font-size: 4.8rem;
   font-weight: 800;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: -5px;
+  margin-top: 20px;
 }
 
-/* --- MODAL DESIGN --- */
+/* --- MODAL DESIGN (GLASSMORPHISM) --- */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,31 +107,31 @@
 }
 
 .modal-content-glass {
-  background: rgba(255, 255, 255, 0.1);
-  -webkit-backdrop-filter: blur(12px);
+  /* O fundo do modal se ajusta ao tema */
+  background: var(--bg-modal, rgba(255, 255, 255, 0.1));
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
   backdrop-filter: blur(25px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--borda-dourada);
   border-radius: 50px;
   padding: 80px 50px;
   width: 100%;
   max-width: 600px;
   text-align: center;
   position: relative;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
 .modal-subtitle {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.75rem;
   letter-spacing: 5px;
-  color: #fff;
+  color: var(--texto-secundario);
   margin-bottom: 15px;
   text-transform: uppercase;
-  opacity: 0.8;
 }
 
 .modal-title {
-  color: #D4AF37;
+  color: var(--gold);
   font-family: 'Playfair Display', serif;
   font-size: 3.2rem;
   font-style: italic;
@@ -143,18 +141,17 @@
 }
 
 .modal-text {
-  color: #fff;
+  color: var(--texto-principal);
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: 1.1rem;
   line-height: 1.8;
   margin-bottom: 40px;
-  opacity: 0.9;
 }
 
 .modal-action-btn {
-  background: #D4AF37;
-  color: #fff;
+  background: var(--gold);
+  color: #000; /* Texto preto no botão dourado para contraste */
   padding: 20px 50px;
   border-radius: 50px;
   border: none;
@@ -162,35 +159,38 @@
   font-weight: 700;
   letter-spacing: 2px;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+  transition: 0.3s;
+}
+
+.modal-action-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
 }
 
 .close-btn {
   position: absolute;
   top: 30px;
   right: 30px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(212, 175, 55, 0.1);
   border: none;
-  color: #fff;
+  color: var(--gold);
   width: 45px;
   height: 45px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: 0.3s;
 }
 
-.close-btn:hover { background: #D4AF37; }
+.close-btn:hover { background: var(--gold); color: #000; }
 
 /* --- RESPONSIVIDADE --- */
 @media (max-width: 768px) {
-  .model-card-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 60px;
-  }
+  .model-card-wrapper { flex-direction: column; align-items: center; gap: 60px; }
   .pos-0, .pos-1, .pos-2 { margin-top: 0; }
   .model-card { height: 450px !important; width: 90vw; }
-  .model-caption { font-size: 2.2rem; }
-  .modal-title { font-size: 2.4rem; }
+  .model-caption { font-size: 2.5rem; letter-spacing: -2px; }
 }

@@ -1,7 +1,9 @@
 .footer-container {
-  background-color: var(--black); /* Ou use o dourado var(--royal-gold) se quiser ele todo colorido */
-  padding: 80px 5% 20px;
-  border-top: 1px solid #D4AF37;
+  /* Segue o tema global */
+  background-color: var(--bg-principal); 
+  padding: 80px 5% 40px;
+  border-top: 1px solid var(--gold);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .footer-content {
@@ -13,10 +15,10 @@
 }
 
 .footer-column h4 {
-  color: #D4AF37;
+  color: var(--gold);
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 2px;
+  font-size: 0.85rem;
+  letter-spacing: 3px;
   margin-bottom: 25px;
   font-weight: 700;
   text-transform: uppercase;
@@ -24,16 +26,18 @@
 
 .footer-logo {
   font-family: 'Playfair Display', serif;
-  color: var(--royal-gold, #D4AF37);
-  font-size: 1.8rem;
+  color: var(--gold);
+  font-size: 2rem;
   margin-bottom: 15px;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
+  font-weight: 700;
 }
 
 .footer-description {
   font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--white);
+  line-height: 1.8;
+  color: var(--texto-secundario); /* Texto mais suave */
+  font-family: 'Montserrat', sans-serif;
 }
 
 .footer-column ul {
@@ -47,43 +51,49 @@
 
 .footer-column ul li a {
   text-decoration: none;
-  color: var(--white);
-  font-size: 0.9rem;
-  transition: color 0.3s;
+  color: var(--texto-principal); /* Cor adaptativa */
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
 }
 
 .footer-column ul li a:hover {
-  color: var(--royal-gold, #D4AF37);
+  color: var(--gold);
+  padding-left: 5px; /* Efeito de deslize sutil */
 }
 
 .footer-column p {
-  font-size: 0.9rem;
-  color: var(--white);
-  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--texto-principal);
+  margin-bottom: 12px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .social-icons {
   display: flex;
   gap: 20px;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
 .social-icons a {
-  color: var(--royal-gold, #D4AF37);
-  transition: transform 0.3s;
+  color: var(--gold);
+  transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
   transform: translateY(-5px);
+  filter: drop-shadow(0 5px 10px rgba(212, 175, 55, 0.3));
 }
 
 .footer-bottom {
-  margin-top: 60px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
+  margin-top: 80px;
+  padding-top: 30px;
+  border-top: 1px solid var(--borda-dourada); /* Borda sutil adaptativa */
   text-align: center;
-  font-size: 0.8rem;
-  color: #999;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
 }
 
 /* Ajuste Mobile */
