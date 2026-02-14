@@ -1,7 +1,11 @@
 /* --- RESET E BASES --- */
-.catalogo-master { padding: 120px 5% 80px; background: var(--black); }
+.catalogo-master { 
+  padding: 120px 5% 80px; 
+  background: var(--bg-principal); /* Adaptável */
+  transition: background 0.5s ease;
+}
 
-/* --- ROLETA EM FILEIRA E CONTROLES DE TEXTO --- */
+/* --- ROLETA EM FILEIRA --- */
 .swiper-custom-wrapper { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; }
 
 .slide-products-row {
@@ -20,42 +24,23 @@
 .mini-card-silk img { width: 100%; height: auto; transition: 0.4s; }
 .mini-card-silk:hover img { transform: translateY(-5px); }
 
-.slide-products-row .text-link-silk {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.6rem;
-  letter-spacing: 2px;
-  color: var(--white);
-  display: block;
-  margin-top: 15px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.slide-products-row .text-link-silk:hover { 
-color: #D4AF37; 
-font-weight: bolder; }
-
-.text-link-silk {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.6rem;
-  letter-spacing: 2px;
-  color: var(--white);
-  display: block;
-  margin-top: 15px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
 .slide-title {
   font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
   color: #D4AF37;
   margin-bottom: -10px;
+  background-color: var(--bg-principal);
+  display: inline-block;
+  padding: 0 10px;
 }
+
 .slide-desc {
   font-size: 0.8rem;
-  color: var(--white);
+  color: var(--texto-secundario);
   margin-bottom: 30px;
 }
-/* Setas substituídas por textos próximos */
+
+/* --- CONTROLES --- */
 .silk-controls {
   display: flex;
   justify-content: center;
@@ -68,24 +53,43 @@ font-weight: bolder; }
   font-family: 'Montserrat', sans-serif;
   font-size: 0.7rem;
   letter-spacing: 3px;
-  color: var(--white);
+  color: var(--texto-principal);
   cursor: pointer;
   transition: 0.3s;
 }
 
 .silk-nav-text:hover { color: #D4AF37; }
-.control-separator { width: 1px; height: 15px; background: var(--black); }
+.control-separator { width: 1px; height: 15px; background: var(--borda-dourada); }
 
 /* --- GRID DE PRODUTOS --- */
+.amazon-layout-container {
+  display: flex;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 50px auto;
+  padding: 0 5%;
+}
+
+.products-grid-main { flex-grow: 1; }
+
+.grid-header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-size: 0.8rem;
+  color: var(--texto-principal);
+}
+
 .luxury-4-col-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px;
 }
 
 .img-holder-silk {
   position: relative;
-  background: var(--black);
+  background: var(--bg-card, rgba(0,0,0,0.05));
   height: 280px;
   display: flex;
   align-items: center;
@@ -93,10 +97,12 @@ font-weight: bolder; }
   overflow: hidden;
 }
 
+.img-holder-silk img { max-width: 90%; max-height: 90%; object-fit: contain; }
+
 .overlay-silk {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.03);
+  background: rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,28 +116,40 @@ font-weight: bolder; }
 .text-link-white {
   font-size: 0.65rem;
   letter-spacing: 3px;
-  color: var(--white);
+  color: #fff;
   border-bottom: 1px solid #fff;
   padding-bottom: 5px;
 }
 
+.info-holder-silk h4 {
+  color: var(--texto-principal);
+  font-family: 'Playfair Display', serif;
+  margin: 10px 0;
+}
+
+.p-price { color: var(--gold); font-weight: bold; }
+
 .add-cart-text {
   font-size: 0.7rem;
-  margin-left: 10px;
-  letter-spacing: 1px;
-  color: var(--white);
+  color: var(--texto-secundario);
   cursor: pointer;
   font-weight: 600;
 }
 
 .add-cart-text:hover { color: #D4AF37; }
 
-/* --- MODAL RECALIBRADO (MUITO MAIS ELEGANTE) --- */
+/* --- SIDEBAR --- */
+.filters-sidebar { width: 220px; flex-shrink: 0; }
+.sidebar-title { font-size: 0.75rem; color: #D4AF37; margin-bottom: 30px; font-weight: 600; }
+.filter-group h4 { font-size: 0.65rem; color: var(--texto-principal); margin-bottom: 15px; text-transform: uppercase; }
+.filter-group li { font-size: 0.85rem; color: var(--texto-secundario); margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+.filter-group li:hover, .filter-group li.active { color: #D4AF37; padding-left: 5px; }
+
+/* --- MODAL --- */
 .modal-overlay-silk {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.518);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   z-index: 10000;
   display: flex;
@@ -140,13 +158,12 @@ font-weight: bolder; }
 }
 
 .modal-compact-container {
-  background: var(--black);
+  background: var(--bg-principal);
   width: 90%;
-  max-width: 800px; /* Tamanho reduzido */
+  max-width: 800px;
   border: 2px solid #D4AF37;
   padding: 50px;
   position: relative;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.44);
 }
 
 .close-silk-text {
@@ -154,29 +171,14 @@ font-weight: bolder; }
   top: 30px;
   right: 30px;
   font-size: 0.8rem;
-  font-weight: bolder;
-  letter-spacing: 2px;
+  color: var(--texto-principal);
   cursor: pointer;
-  color: #000000;
-  border: 1px solid transparent;
-  padding: 5px 10px;
-  transition: 0.3s infinite ease; 
 }
-.close-silk-text:hover {
-   color: #D4AF37; 
-   border: 1px solid #D4AF37;
-   padding: 5px 10px;
-   transition: 0.3s infinite ease; 
-  }
 
 .modal-compact-body { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-
-.modal-compact-img img { width: 100%; height: auto; }
-
-.modal-tag { font-size: 0.6rem; letter-spacing: 3px; color: #D4AF37; }
-.modal-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--white); margin: 15px 0; }
-.modal-text-desc { font-size: 0.85rem; line-height: 1.6; color: #777; margin-bottom: 25px; }
-.modal-price-silk { font-size: 1.5rem; color: var(--white); display: block; margin-bottom: 30px; }
+.modal-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--texto-principal); }
+.modal-text-desc { font-size: 0.85rem; color: var(--texto-secundario); margin-bottom: 25px; }
+.modal-price-silk { font-size: 1.5rem; color: var(--gold); display: block; margin-bottom: 30px; }
 
 .btn-text-buy {
   font-size: 0.75rem;
@@ -186,171 +188,10 @@ font-weight: bolder; }
   border: 2px solid #D4AF37;
   padding: 18px 40px;
   cursor: pointer;
-  transition: 0.4s;
-  display: inline-block;
 }
 
-.btn-text-buy:hover { background: #D4AF37; color: var(--black); }
+.btn-text-buy:hover { background: #D4AF37; color: #000; }
 
-
-/* Container que divide Sidebar e Grid */
-.amazon-layout-container {
-  display: flex;
-  gap: 40px;
-  max-width: 1400px;
-  margin: 50px auto;
-  padding: 0 5%;
-}
-
-/* Sidebar Estilo Clássico */
-.filters-sidebar {
-  width: 220px;
-  flex-shrink: 0;
-  text-align: left;
-}
-
-.sidebar-title {
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  color: #D4AF37;
-  margin-bottom: 30px;
-  font-weight: 600;
-}
-
-.filter-group {
-  margin-bottom: 35px;
-}
-
-.filter-group h4 {
-  font-size: 0.65rem;
-  letter-spacing: 1.5px;
-  color: var(--white);
-  margin-bottom: 15px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.filter-group ul {
-  list-style: none;
-  padding: 0;
-}
-
-.filter-group li {
-  font-size: 0.85rem;
-  color: var(--white);
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.filter-group li:hover, .filter-group li.active {
-  color: #D4AF37;
-  padding-left: 5px;
-}
-
-/* Bolinhas de Cores */
-.color-options-grid {
-  display: flex;
-  gap: 10px;
-}
-
-.color-circle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 1px solid #eee;
-}
-.color-circle.red { background: #b01b1b; }
-.color-circle.nude { background: #e3bc9a; }
-.color-circle.gold { background: #d4af37; }
-
-/* Grid de Produtos à direita */
-.products-grid-main {
-  flex-grow: 1;
-}
-
-.grid-header-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  font-size: 0.8rem;
-  color: var(--white);
-}
-
-.sort-text-btn {
-  color: var(--white);
-  cursor: pointer;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.luxury-4-col-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 30px;
-}
-.text-link-silk {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.6rem;
-  letter-spacing: 2px;
-  color: #D4AF37;
-  display: block;
-  margin-top: 15px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.text-link-silk:hover { color: #1a1a1a; }
-.text-link-white {
-  font-size: 0.65rem;
-  letter-spacing: 3px;
-  padding: 5px 3px;
-  color: #ffffff;
-  background-color: #1a1a1a;
-  border-bottom: 1px solid #1a1a1a;
-  padding-bottom: 5px;
-}
-
-/* Resolve a sobreposição de textos no Swiper (Foto 4) */
-.mySwiper .swiper-slide {
-  opacity: 0 !important;
-  transition: opacity 0.5s ease-in-out;
-  background: var(--black); /* Garante fundo limpo entre transições */
-}
-
-.mySwiper .swiper-slide-active {
-  opacity: 1 !important;
-}
-
-/* Garante que o título não fique "sujo" com o slide anterior */
-.slide-title {
-  background-color: var(--black); 
-  display: inline-block;
-  padding: 0 10px;
-}
-
-/* Estilo para quando não há produtos (Foto 3 e 4) */
-.no-products {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 100px 0;
-  font-family: 'Playfair Display', serif;
-}
-
-.no-products button {
-  margin-top: 20px;
-  background: #D4AF37;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-/* Garante que a sidebar apareça */
-.filters-sidebar {
-  min-width: 200px;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
+/* Swiper Fix */
+.mySwiper .swiper-slide { opacity: 0 !important; transition: opacity 0.5s ease; }
+.mySwiper .swiper-slide-active { opacity: 1 !important; }
