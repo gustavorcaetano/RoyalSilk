@@ -26,7 +26,7 @@
 
 .slide-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   color: #D4AF37;
   margin-bottom: -10px;
   background-color: var(--bg-principal);
@@ -35,10 +35,11 @@
 }
 
 .slide-desc {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   color: var(--texto-secundario);
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
+
 
 /* --- CONTROLES --- */
 .silk-controls {

@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectFade } from "swiper/modules";
 import { produtosCatalogo } from "../data/produtos";
+import { useCart } from '../context/CartContext';
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -13,6 +14,7 @@ import "../pagesCss/Catalogo.css";
 
 export const Catalogo = () => {
   const location = useLocation();
+  const { addToCart } = useCart();
   
   // Estados principais
   const [produtos] = useState(produtosCatalogo);
@@ -123,7 +125,7 @@ export const Catalogo = () => {
                     <h4>{p.nome}</h4>
                     <div className="p-footer-silk">
                       <span className="p-price">R$ {p.preco.toFixed(2)}</span>
-                      <span className="add-cart-text" onClick={() => setProdutoSelecionado(p)}>+ ADICIONAR</span>
+                      <span className="add-cart-text" onClick={() => addToCart(p)}>+ ADICIONAR</span>
                     </div>
                   </div>
                 </div>

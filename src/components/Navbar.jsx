@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCart } from '../context/CartContext';
 import { Link } from "react-router-dom";
 import "../componentsCss/Navbar.css";
 
@@ -9,6 +10,10 @@ import storeIcon from "../assets/icone-compra.png";
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // Dentro do seu componente Navbar:
+  const { cart } = useCart();
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -43,12 +48,11 @@ export const Navbar = () => {
             CATÁLOGO
           </Link>
         </div>
-        <Link to="/usuario" className="nav-icon-link">
-          <img
-            src={storeIcon} className="nav-icons"
-            alt="Carrinho"
-            style={{ width: "24px", cursor: "pointer" }}
-          />
+        <Link to="/carrinho" className="nav-icon-link">
+          <div className="nav-icon-wrapper">
+            <img src={storeIcon} className="nav-icons" alt="Carrinho" />
+            {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+          </div>
         </Link>
 
         {/* LOGO */}

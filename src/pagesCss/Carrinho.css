@@ -1,0 +1,186 @@
+/* --- PAGINA DE CARRINHO ROYAL SILK --- */
+
+.cart-master-container {
+  padding: 160px 8% 80px; /* Espaço para não ficar embaixo da Navbar */
+  min-height: 100vh;
+  background-color: var(--bg-principal);
+  transition: background-color 0.5s ease;
+}
+
+.cart-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 60px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+/* Estrutura em Grid: Itens à esquerda, Resumo à direita */
+.cart-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --- LISTA DE PRODUTOS --- */
+.cart-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item-card {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  background: var(--bg-card);
+  border: 1px solid var(--borda-dourada);
+  border-radius: 4px;
+  gap: 30px;
+  transition: transform 0.3s ease;
+}
+
+.cart-item-card:hover {
+  transform: translateY(-3px);
+}
+
+.cart-item-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  background: #fff; /* Fundo branco para destacar o produto */
+  padding: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.item-details {
+  flex-grow: 1;
+}
+
+.item-details h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--texto-principal);
+  margin-bottom: 8px;
+}
+
+.item-price {
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+/* Controles de Quantidade */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid var(--borda-dourada);
+  width: fit-content;
+  padding: 5px 15px;
+}
+
+.qty-controls button {
+  background: none;
+  border: none;
+  color: var(--texto-principal);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: color 0.3s;
+}
+
+.qty-controls button:hover {
+  color: var(--gold);
+}
+
+.qty-controls span {
+  font-weight: 500;
+  min-width: 20px;
+  text-align: center;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--texto-secundario);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.3s;
+}
+
+.remove-btn:hover {
+  color: #ff4d4d;
+}
+
+/* --- CARD DE RESUMO --- */
+.cart-summary-card {
+  background: var(--bg-card);
+  padding: 40px;
+  border: 2px solid var(--gold);
+  position: sticky;
+  top: 140px;
+  height: fit-content;
+}
+
+.cart-summary-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--borda-dourada);
+  padding-bottom: 10px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: var(--texto-principal);
+}
+
+.summary-row.total {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid var(--gold);
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: var(--gold);
+}
+
+/* Reaproveitando seu estilo de botão de compra */
+.full-width {
+  width: 100%;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+/* Mensagem de Carrinho Vazio */
+.empty-cart-msg {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.empty-cart-msg p {
+  font-size: 1.2rem;
+  color: var(--texto-secundario);
+  margin-bottom: 30px;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .cart-content-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cart-summary-card {
+    position: static;
+  }
+}

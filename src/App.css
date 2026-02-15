@@ -3,8 +3,8 @@
 /* CONFIGURAÇÕES DE CORES E TEMAS */
 :root {
   /* TEMA ESCURO (Padrão) */
-  --bg-principal: #0a0a0a;
-  --bg-card: #111111;
+  --bg-principal: #1d1c1c;
+  --bg-card: #1d1c1c;
   --texto-principal: #ffffff;
   --texto-secundario: #888888;
   --borda-dourada: rgba(212, 175, 55, 0.3);
