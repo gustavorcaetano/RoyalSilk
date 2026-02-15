@@ -8,7 +8,7 @@
   import { Usuario } from './pages/Usuario';
 
  function App() {
-  const [temaEscuro, setTemaEscuro] = useState(true);
+  const [temaEscuro, setTemaEscuro] = useState(false);
   const [fontSize, setFontSize] = useState(16);
 
   useEffect(() => {
