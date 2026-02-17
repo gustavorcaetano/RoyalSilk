@@ -1,6 +1,6 @@
 import React from 'react';
 import '../componentsCss/Hero.css';
-import perfumeSalto2 from '../assets/perfume-salto2.png';
+import perfumeSalto2 from '../assets/perfume-salto3.png';
 
 export const Hero = () => {
   return (
@@ -9,8 +9,8 @@ export const Hero = () => {
         
         {/* Parte superior: "DE MELHOR" fica atrás, "PARA UMA PESSOA" fica na frente */}
         <h1 className="hero-title-base">
-          <span className="behind">O QUE HÁ DE MELHOR.</span> <br />
-          <span className="front-row">PARA UMA PESSOA</span>
+          <div className="behind">O QUE HÁ <span className="behind-right">DE MELHOR.</span></div> <br />
+          <div className="front-row"><span className="front-row-left">PARA UMA</span>  PESSOA</div>
         </h1>
 
         {/* Container da sobreposição para a última palavra */}
