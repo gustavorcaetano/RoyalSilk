@@ -3,7 +3,7 @@
 **“O que há de melhor. Para uma pessoa melhor.”**
 
 <div align="center">
-  <img src="./src/assets/logo.png" width="200" alt="Logo Royal Silk">
+  <img src="./src/assets/ROYALSILK.png" width="200" alt="Logo Royal Silk">
 </div>
 
 ---
