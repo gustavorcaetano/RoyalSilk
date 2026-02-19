@@ -4,19 +4,25 @@ import perfumeSalto2 from '../assets/perfume-salto3.png';
 
 export const Hero = () => {
   return (
-    <section className="hero-container">
-      <div className="hero-content">
+   <section className="hero-container">
+      <div className="hero-layout">
         
-        {/* Parte superior: "DE MELHOR" fica atrás, "PARA UMA PESSOA" fica na frente */}
-        <h1 className="hero-title-base">
-          <div className="behind">O QUE HÁ <span className="behind-right">DE MELHOR.</span></div> <br />
-          <div className="front-row"><span className="front-row-left">PARA UMA</span>  PESSOA</div>
-        </h1>
+        {/* LADO ESQUERDO: 3 LINHAS */}
+        <div className="hero-side left">
+          <h1 className="hero-text">O QUE</h1>
+          <h1 className="hero-text">HÁ DE</h1>
+          <h1 className="hero-text text-gray">MELHOR.</h1>
+        </div>
 
-        {/* Container da sobreposição para a última palavra */}
-        <div className="overlap-wrapper">
-          <img src={perfumeSalto2} alt="Perfume" className="perfume-img" />
-          <h1 className="hero-title-front">MELHOR.</h1>
+        <div className="hero-center">
+          <img src={perfumeSalto2} className="perfume-img-new" alt="Perfume" />
+        </div>
+
+        {/* LADO DIREITO: 3 LINHAS */}
+        <div className="hero-side right">
+          <h1 className="hero-text text-gray">PARA</h1>
+          <h1 className="hero-text">UMA PESSOA</h1>
+          <h1 className="hero-text">MELHOR.</h1>
         </div>
 
       </div>
