@@ -19,23 +19,24 @@ export const Catalogo = () => {
   // Estados principais
   const [produtos] = useState(produtosCatalogo);
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false); // Estado para o menu mobile
   
   // Inicializa o filtro: Prioridade para o estado da rota, se não, 'todos'
   const [filtroAtivo, setFiltroAtivo] = useState(location.state?.filterId || 'todos');
 
-  // Sincroniza o filtro caso o usuário mude de coleção enquanto já está no catálogo
+  // Sincroniza o filtro caso o usuário mude de coleção via link externo
   useEffect(() => {
     if (location.state?.filterId) {
       setFiltroAtivo(location.state.filterId);
     }
   }, [location.state]);
 
-  // LÓGICA DE FILTRAGEM REFORÇADA
+  // Lógica de filtragem
   const produtosFiltrados = (filtroAtivo === 'todos' || !filtroAtivo)
     ? produtos 
     : produtos.filter(p => String(p.colecaoId) === String(filtroAtivo));
 
-  // Dados das coleções para a roleta
+  // Dados das coleções para a roleta (Destaques)
   const colecoesDestaque = [
     { id: 1, titulo: "L'OR ESSENTIAL ", desc: "A pureza do minimalismo encontra a nobreza do ouro.", itens: produtos.slice(0, 3) },
     { id: 2, titulo: "HÉRITAGE DE SOIE", desc: "A essência da Royal Silk em sua forma mais pura.", itens: produtos.slice(1, 4) },
@@ -50,7 +51,7 @@ export const Catalogo = () => {
           <Swiper
             modules={[Navigation, Pagination, EffectFade]}
             effect="fade"
-            fadeEffect={{ crossFade: true }} // Evita sobreposição de texto
+            fadeEffect={{ crossFade: true }}
             navigation={{ nextEl: ".next-silk", prevEl: ".prev-silk" }}
             pagination={{ clickable: true }}
             loop={true}
@@ -63,7 +64,8 @@ export const Catalogo = () => {
                   <p className="slide-desc">{col.desc}</p>
                   
                   <div className="slide-products-row">
-                    {col.itens.map((p) => (
+                    {/* No mobile mostramos apenas 2 itens para não quebrar o layout */}
+                    {col.itens.slice(0, 3).map((p) => (
                       <div key={p.id} className="mini-card-silk" onClick={() => setProdutoSelecionado(p)}>
                         <img src={p.img} alt={p.nome} />
                         <span className="text-link-silk">VER DETALHES</span>
@@ -83,31 +85,63 @@ export const Catalogo = () => {
         </div>
       </section>
 
+      {/* BOTÃO FILTRO MOBILE */}
+      <div className="mobile-filter-trigger-container">
+        <button className="mobile-filter-btn" onClick={() => setIsFilterOpen(true)}>
+          FILTRAR POR ▾
+        </button>
+      </div>
+
       {/* GRID DE PRODUTOS E SIDEBAR */}
       <div className="amazon-layout-container">
-        <aside className="filters-sidebar">
-          <div className="sidebar-section">
-            <h3 className="sidebar-title">FILTRAR POR</h3>
-            <div className="filter-group">
-              <h4>CATEGORIA</h4>
-              <ul>
-                <li 
-                  className={filtroAtivo === 'todos' ? 'active' : ''} 
-                  onClick={() => setFiltroAtivo('todos')}
-                >
-                  Todos
-                </li>
-                <li onClick={() => setFiltroAtivo('batons')}>Batons</li>
-                <li onClick={() => setFiltroAtivo('pele')}>Pele</li>
-              </ul>
+        
+        {/* SIDEBAR COM OVERLAY NO MOBILE */}
+        <aside className={`filters-sidebar ${isFilterOpen ? 'open' : ''}`}>
+          <div className="sidebar-content">
+            <div className="mobile-only sidebar-header-mobile">
+              <span>FILTROS</span>
+              <span className="close-filters" onClick={() => setIsFilterOpen(false)}>FECHAR X</span>
+            </div>
+
+            <div className="sidebar-section">
+              <h3 className="sidebar-title">CATEGORIAS</h3>
+              <div className="filter-group">
+                <ul>
+                  <li 
+                    className={filtroAtivo === 'todos' ? 'active' : ''} 
+                    onClick={() => { setFiltroAtivo('todos'); setIsFilterOpen(false); }}
+                  >
+                    Todos os Produtos
+                  </li>
+                  <li 
+                    className={filtroAtivo === 'batons' ? 'active' : ''}
+                    onClick={() => { setFiltroAtivo('batons'); setIsFilterOpen(false); }}
+                  >
+                    Batons
+                  </li>
+                  <li 
+                    className={filtroAtivo === 'pele' ? 'active' : ''}
+                    onClick={() => { setFiltroAtivo('pele'); setIsFilterOpen(false); }}
+                  >
+                    Pele & Cuidados
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </aside>
 
+        {/* MÁSCARA ESCURA QUANDO O MENU LATERAL ESTÁ ABERTO (MOBILE) */}
+        {isFilterOpen && (
+          <div className="mobile-sidebar-overlay" onClick={() => setIsFilterOpen(false)}></div>
+        )}
+
         <main className="products-grid-main">
           <div className="grid-header-info">
-            <span>{produtosFiltrados.length} produtos encontrados</span>
-            <span className="sort-text-btn">ORDENAR POR ▾</span>
+            <span className="count-info">{produtosFiltrados.length} produtos encontrados</span>
+            <div className="sort-container hide-on-mobile">
+              <span className="sort-text-btn">ORDENAR POR ▾</span>
+            </div>
           </div>
 
           <div className="luxury-4-col-grid">
@@ -133,18 +167,29 @@ export const Catalogo = () => {
             ) : (
               <div className="no-products">
                 <p>Nenhum produto encontrado para este filtro.</p>
-                <button onClick={() => setFiltroAtivo('todos')}>Ver todos os produtos</button>
+                <button className="reset-filter-btn" onClick={() => setFiltroAtivo('todos')}>Ver todos</button>
               </div>
             )}
           </div>
         </main>
       </div>
 
-      {/* MODAL DE DETALHES */}
+      {/* MODAL DE DETALHES RESPONSIVO */}
       <AnimatePresence>
         {produtoSelecionado && (
-          <motion.div className="modal-overlay-silk" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setProdutoSelecionado(null)}>
-            <motion.div className="modal-compact-container" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} onClick={e => e.stopPropagation()}>
+          <motion.div 
+            className="modal-overlay-silk" 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            onClick={() => setProdutoSelecionado(null)}
+          >
+            <motion.div 
+              className="modal-compact-container" 
+              initial={{ scale: 0.95, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1 }} 
+              onClick={e => e.stopPropagation()}
+            >
               <span className="close-silk-text" onClick={() => setProdutoSelecionado(null)}>FECHAR</span>
               <div className="modal-compact-body">
                 <div className="modal-compact-img">
@@ -153,10 +198,18 @@ export const Catalogo = () => {
                 <div className="modal-compact-info">
                   <span className="modal-tag">BOUTIQUE EXCLUSIVE</span>
                   <h2 className="modal-name">{produtoSelecionado.nome}</h2>
-                  <p className="modal-text-desc">Qualidade premium Royal Silk.</p>
+                  <p className="modal-text-desc">Qualidade premium Royal Silk feita para quem busca o extraordinário.</p>
                   <span className="modal-price-silk">R$ {produtoSelecionado.preco.toFixed(2)}</span>
                   <div className="action-row-silk">
-                    <span className="btn-text-buy">CONFIRMAR COMPRA</span>
+                    <button 
+                      className="btn-text-buy" 
+                      onClick={() => {
+                        addToCart(produtoSelecionado);
+                        setProdutoSelecionado(null);
+                      }}
+                    >
+                      ADICIONAR AO CARRINHO
+                    </button>
                   </div>
                 </div>
               </div>
