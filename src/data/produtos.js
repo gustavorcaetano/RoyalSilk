@@ -44,7 +44,7 @@ export const produtosCatalogo = [
     id: 4,
     nome: "ILUMINADOR VELVET",
     preco: 310.00,
-    colecaoId: 3, // VELOURS IMPÉRIAL
+    colecaoId: 2, 
     categoria: "pele",
     img: iluminadorlImg
   },
@@ -52,7 +52,7 @@ export const produtosCatalogo = [
     id: 5,
     nome: "BATOM NUDE SATIN",
     preco: 198.00,
-    colecaoId: 1,
+    colecaoId: 2,
     categoria: "batons",
     img: batom4Img
   },
@@ -60,7 +60,7 @@ export const produtosCatalogo = [
     id: 6,
     nome: "PÓ COMPACTO ÉCLAT",
     preco: 285.00,
-    colecaoId: 2,
+    colecaoId: 1,
     categoria: "pele",
     img: poImg
   },
@@ -68,7 +68,7 @@ export const produtosCatalogo = [
     id: 7,
     nome: "GLOSS CRYSTAL",
     preco: 155.00,
-    colecaoId: 3,
+    colecaoId: 2,
     categoria: "batons",
     img: batom5Img
   },
@@ -76,7 +76,7 @@ export const produtosCatalogo = [
     id: 8,
     nome: "BASE FLUIDA SOIE",
     preco: 340.00,
-    colecaoId: 2,
+    colecaoId: 1,
     categoria: "pele",
     img: baseImg
   },
@@ -84,7 +84,7 @@ export const produtosCatalogo = [
     id: 9,
     nome: "BATOM MATTE NOIR",
     preco: 229.90,
-    colecaoId: 1,
+    colecaoId: 3, // VELOURS IMPÉRIAL
     categoria: "batons",
     img: batom6Img
   },
@@ -92,7 +92,7 @@ export const produtosCatalogo = [
     id: 10,
     nome: "CORRETIVO LUMIÈRE",
     preco: 189.00,
-    colecaoId: 3,
+    colecaoId: 1,
     categoria: "pele",
     img: corretivolImg
   },
