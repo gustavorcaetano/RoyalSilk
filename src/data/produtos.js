@@ -2,9 +2,18 @@
 import batomImg from "../assets/batom-premium2.png";
 import batom3Img from "../assets/batom-premium3.png";
 import batom4Img from "../assets/batom-premium4.png";
+import batom5Img from "../assets/batom-premium5.png";
+import batom6Img from "../assets/batom-premium6.png";
+import batom7Img from "../assets/batom-premium7.png";
+
+
 import sombralImg from "../assets/sombra-premium2.png"; 
 import iluminadorlImg from "../assets/iluminador-premium1.png";
+import corretivolImg from "../assets/corretivo-premium.png";
+
+import paletaImg from "../assets/paleta-premium.png";
 import poImg from "../assets/po-premium.png";
+import baseImg from "../assets/base-premium.png";
 
 export const produtosCatalogo = [
   {
@@ -61,7 +70,7 @@ export const produtosCatalogo = [
     preco: 155.00,
     colecaoId: 3,
     categoria: "batons",
-    img: batomImg
+    img: batom5Img
   },
   {
     id: 8,
@@ -69,7 +78,7 @@ export const produtosCatalogo = [
     preco: 340.00,
     colecaoId: 2,
     categoria: "pele",
-    img: sombralImg
+    img: baseImg
   },
   {
     id: 9,
@@ -77,7 +86,7 @@ export const produtosCatalogo = [
     preco: 229.90,
     colecaoId: 1,
     categoria: "batons",
-    img: batomImg
+    img: batom6Img
   },
   {
     id: 10,
@@ -85,7 +94,7 @@ export const produtosCatalogo = [
     preco: 189.00,
     colecaoId: 3,
     categoria: "pele",
-    img: sombralImg
+    img: corretivolImg
   },
   {
     id: 11,
@@ -93,7 +102,7 @@ export const produtosCatalogo = [
     preco: 245.00,
     colecaoId: 2,
     categoria: "batons",
-    img: batomImg
+    img: batom7Img
   },
   {
     id: 12,
@@ -101,6 +110,6 @@ export const produtosCatalogo = [
     preco: 450.00,
     colecaoId: 1,
     categoria: "pele",
-    img: sombralImg
+    img: paletaImg
   }
 ];
