@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,27 +16,39 @@ export const Catalogo = () => {
   const location = useLocation();
   const { addToCart } = useCart();
   
-  // Estados principais
   const [produtos] = useState(produtosCatalogo);
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // Estado para o menu mobile
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   
-  // Inicializa o filtro: Prioridade para o estado da rota, se não, 'todos'
+  // Filtros e Ordenação
   const [filtroAtivo, setFiltroAtivo] = useState(location.state?.filterId || 'todos');
+  const [ordem, setOrdem] = useState('default');
 
-  // Sincroniza o filtro caso o usuário mude de coleção via link externo
   useEffect(() => {
     if (location.state?.filterId) {
       setFiltroAtivo(location.state.filterId);
     }
   }, [location.state]);
 
-  // Lógica de filtragem
-  const produtosFiltrados = (filtroAtivo === 'todos' || !filtroAtivo)
-    ? produtos 
-    : produtos.filter(p => String(p.colecaoId) === String(filtroAtivo));
+  // LÓGICA DE FILTRAGEM E ORDENAÇÃO (USEMEMO PARA PERFORMANCE)
+  const produtosProcessados = useMemo(() => {
+    // 1. Filtrar
+    let resultado = (filtroAtivo === 'todos' || !filtroAtivo)
+      ? [...produtos]
+      : produtos.filter(p => 
+          String(p.colecaoId) === String(filtroAtivo) || 
+          p.categoria === filtroAtivo ||
+          p.colecaoNome === filtroAtivo
+        );
 
-  // Dados das coleções para a roleta (Destaques)
+    // 2. Ordenar
+    if (ordem === 'preco-crescente') resultado.sort((a, b) => a.preco - b.preco);
+    if (ordem === 'preco-decrescente') resultado.sort((a, b) => b.preco - a.preco);
+    if (ordem === 'alfabetica') resultado.sort((a, b) => a.nome.localeCompare(b.nome));
+
+    return resultado;
+  }, [produtos, filtroAtivo, ordem]);
+
   const colecoesDestaque = [
     { id: 1, titulo: "L'OR ESSENTIAL ", desc: "A pureza do minimalismo encontra a nobreza do ouro.", itens: produtos.slice(0, 3) },
     { id: 2, titulo: "HÉRITAGE DE SOIE", desc: "A essência da Royal Silk em sua forma mais pura.", itens: produtos.slice(1, 4) },
@@ -45,7 +57,6 @@ export const Catalogo = () => {
 
   return (
     <div className="catalogo-master">
-      {/* SEÇÃO DA ROLETA (SWIPER) */}
       <section className="roleta-colecoes">
         <div className="swiper-custom-wrapper">
           <Swiper
@@ -62,9 +73,7 @@ export const Catalogo = () => {
                 <div className="colecao-slide-content">
                   <h2 className="slide-title">{col.titulo}</h2>
                   <p className="slide-desc">{col.desc}</p>
-                  
                   <div className="slide-products-row">
-                    {/* No mobile mostramos apenas 2 itens para não quebrar o layout */}
                     {col.itens.slice(0, 3).map((p) => (
                       <div key={p.id} className="mini-card-silk" onClick={() => setProdutoSelecionado(p)}>
                         <img src={p.img} alt={p.nome} />
@@ -76,7 +85,6 @@ export const Catalogo = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-          
           <div className="silk-controls">
             <span className="prev-silk silk-nav-text">ANTERIOR</span>
             <div className="control-separator"></div>
@@ -85,68 +93,70 @@ export const Catalogo = () => {
         </div>
       </section>
 
-      {/* BOTÃO FILTRO MOBILE */}
       <div className="mobile-filter-trigger-container">
         <button className="mobile-filter-btn" onClick={() => setIsFilterOpen(true)}>
-          FILTRAR POR ▾
+          FILTRAR E ORDENAR ▾
         </button>
       </div>
 
-      {/* GRID DE PRODUTOS E SIDEBAR */}
       <div className="amazon-layout-container">
-        
-        {/* SIDEBAR COM OVERLAY NO MOBILE */}
         <aside className={`filters-sidebar ${isFilterOpen ? 'open' : ''}`}>
           <div className="sidebar-content">
             <div className="mobile-only sidebar-header-mobile">
               <span>FILTROS</span>
-              <span className="close-filters" onClick={() => setIsFilterOpen(false)}>FECHAR X</span>
+              <span className="close-filters" onClick={() => setIsFilterOpen(false)}>X</span>
             </div>
 
+            {/* SEÇÃO DE CATEGORIAS */}
             <div className="sidebar-section">
               <h3 className="sidebar-title">CATEGORIAS</h3>
-              <div className="filter-group">
-                <ul>
-                  <li 
-                    className={filtroAtivo === 'todos' ? 'active' : ''} 
-                    onClick={() => { setFiltroAtivo('todos'); setIsFilterOpen(false); }}
-                  >
-                    Todos os Produtos
-                  </li>
-                  <li 
-                    className={filtroAtivo === 'batons' ? 'active' : ''}
-                    onClick={() => { setFiltroAtivo('batons'); setIsFilterOpen(false); }}
-                  >
-                    Batons
-                  </li>
-                  <li 
-                    className={filtroAtivo === 'pele' ? 'active' : ''}
-                    onClick={() => { setFiltroAtivo('pele'); setIsFilterOpen(false); }}
-                  >
-                    Pele & Cuidados
-                  </li>
-                </ul>
-              </div>
+              <ul className="filter-list">
+                <li className={filtroAtivo === 'todos' ? 'active' : ''} onClick={() => { setFiltroAtivo('todos'); setIsFilterOpen(false); }}>Todos os Produtos</li>
+                <li className={filtroAtivo === 'batons' ? 'active' : ''} onClick={() => { setFiltroAtivo('batons'); setIsFilterOpen(false); }}>Batons</li>
+                <li className={filtroAtivo === 'pele' ? 'active' : ''} onClick={() => { setFiltroAtivo('pele'); setIsFilterOpen(false); }}>Pele & Cuidados</li>
+              </ul>
+            </div>
+
+            {/* SEÇÃO DE COLEÇÕES */}
+            <div className="sidebar-section">
+              <h3 className="sidebar-title">COLEÇÕES</h3>
+              <ul className="filter-list">
+                <li className={filtroAtivo === '1' ? 'active' : ''} onClick={() => { setFiltroAtivo('1'); setIsFilterOpen(false); }}>L'Or Essential</li>
+                <li className={filtroAtivo === '2' ? 'active' : ''} onClick={() => { setFiltroAtivo('2'); setIsFilterOpen(false); }}>Héritage de Soie</li>
+                <li className={filtroAtivo === '3' ? 'active' : ''} onClick={() => { setFiltroAtivo('3'); setIsFilterOpen(false); }}>Velours Impérial</li>
+              </ul>
+            </div>
+
+            {/* ORDENAÇÃO MOBILE (Dentro da sidebar para melhor UX) */}
+            <div className="sidebar-section mobile-only">
+              <h3 className="sidebar-title">ORDENAR POR</h3>
+              <select className="mobile-sort-select" value={ordem} onChange={(e) => {setOrdem(e.target.value); setIsFilterOpen(false);}}>
+                <option value="default">Relevância</option>
+                <option value="preco-crescente">Menor Preço</option>
+                <option value="preco-decrescente">Maior Preço</option>
+                <option value="alfabetica">A - Z</option>
+              </select>
             </div>
           </div>
         </aside>
 
-        {/* MÁSCARA ESCURA QUANDO O MENU LATERAL ESTÁ ABERTO (MOBILE) */}
-        {isFilterOpen && (
-          <div className="mobile-sidebar-overlay" onClick={() => setIsFilterOpen(false)}></div>
-        )}
-
         <main className="products-grid-main">
           <div className="grid-header-info">
-            <span className="count-info">{produtosFiltrados.length} produtos encontrados</span>
+            <span className="count-info">{produtosProcessados.length} produtos encontrados</span>
             <div className="sort-container hide-on-mobile">
-              <span className="sort-text-btn">ORDENAR POR ▾</span>
+              <label>ORDENAR POR:</label>
+              <select className="silk-select" value={ordem} onChange={(e) => setOrdem(e.target.value)}>
+                <option value="default">Destaques</option>
+                <option value="preco-crescente">Menor Preço</option>
+                <option value="preco-decrescente">Maior Preço</option>
+                <option value="alfabetica">Nome (A - Z)</option>
+              </select>
             </div>
           </div>
 
           <div className="luxury-4-col-grid">
-            {produtosFiltrados.length > 0 ? (
-              produtosFiltrados.map((p) => (
+            {produtosProcessados.length > 0 ? (
+              produtosProcessados.map((p) => (
                 <div key={p.id} className="grid-product-card">
                   <div className="img-holder-silk">
                     <img src={p.img} alt={p.nome} />
@@ -166,30 +176,19 @@ export const Catalogo = () => {
               ))
             ) : (
               <div className="no-products">
-                <p>Nenhum produto encontrado para este filtro.</p>
-                <button className="reset-filter-btn" onClick={() => setFiltroAtivo('todos')}>Ver todos</button>
+                <p>Nenhum produto encontrado.</p>
+                <button onClick={() => setFiltroAtivo('todos')}>Limpar Filtros</button>
               </div>
             )}
           </div>
         </main>
       </div>
 
-      {/* MODAL DE DETALHES RESPONSIVO */}
+      {/* MODAL (Mantido igual) */}
       <AnimatePresence>
         {produtoSelecionado && (
-          <motion.div 
-            className="modal-overlay-silk" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            onClick={() => setProdutoSelecionado(null)}
-          >
-            <motion.div 
-              className="modal-compact-container" 
-              initial={{ scale: 0.95, opacity: 0 }} 
-              animate={{ scale: 1, opacity: 1 }} 
-              onClick={e => e.stopPropagation()}
-            >
+          <motion.div className="modal-overlay-silk" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setProdutoSelecionado(null)}>
+            <motion.div className="modal-compact-container" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} onClick={e => e.stopPropagation()}>
               <span className="close-silk-text" onClick={() => setProdutoSelecionado(null)}>FECHAR</span>
               <div className="modal-compact-body">
                 <div className="modal-compact-img">
@@ -201,15 +200,7 @@ export const Catalogo = () => {
                   <p className="modal-text-desc">Qualidade premium Royal Silk feita para quem busca o extraordinário.</p>
                   <span className="modal-price-silk">R$ {produtoSelecionado.preco.toFixed(2)}</span>
                   <div className="action-row-silk">
-                    <button 
-                      className="btn-text-buy" 
-                      onClick={() => {
-                        addToCart(produtoSelecionado);
-                        setProdutoSelecionado(null);
-                      }}
-                    >
-                      ADICIONAR AO CARRINHO
-                    </button>
+                    <button className="btn-text-buy" onClick={() => { addToCart(produtoSelecionado); setProdutoSelecionado(null); }}>ADICIONAR AO CARRINHO</button>
                   </div>
                 </div>
               </div>
