@@ -1,6 +1,10 @@
 // Importe suas imagens aqui (ajuste o caminho conforme sua pasta)
-import batomImg from "../assets/batom-premium.png";
-import sombralImg from "../assets/sombra-premium.png"; 
+import batomImg from "../assets/batom-premium2.png";
+import batom3Img from "../assets/batom-premium3.png";
+import batom4Img from "../assets/batom-premium4.png";
+import sombralImg from "../assets/sombra-premium2.png"; 
+import iluminadorlImg from "../assets/iluminador-premium1.png";
+import poImg from "../assets/po-premium.png";
 
 export const produtosCatalogo = [
   {
@@ -25,7 +29,7 @@ export const produtosCatalogo = [
     preco: 215.00,
     colecaoId: 2, // HÉRITAGE DE SOIE
     categoria: "batons",
-    img: batomImg
+    img: batom3Img
   },
   {
     id: 4,
@@ -33,7 +37,7 @@ export const produtosCatalogo = [
     preco: 310.00,
     colecaoId: 3, // VELOURS IMPÉRIAL
     categoria: "pele",
-    img: sombralImg
+    img: iluminadorlImg
   },
   {
     id: 5,
@@ -41,7 +45,7 @@ export const produtosCatalogo = [
     preco: 198.00,
     colecaoId: 1,
     categoria: "batons",
-    img: batomImg
+    img: batom4Img
   },
   {
     id: 6,
@@ -49,7 +53,7 @@ export const produtosCatalogo = [
     preco: 285.00,
     colecaoId: 2,
     categoria: "pele",
-    img: sombralImg
+    img: poImg
   },
   {
     id: 7,
