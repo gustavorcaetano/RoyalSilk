@@ -126,6 +126,17 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 30px;
 }
+.btn-text-buy {
+  margin-top: 20px;
+  background: #1a1a1a;
+  color: white;
+  border: 1px solid var(--gold);
+  padding: 15px 30px;
+  width: 100%;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
 /* --- CARD DO PRODUTO --- */
 .grid-product-card {

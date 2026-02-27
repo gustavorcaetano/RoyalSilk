@@ -1,23 +1,102 @@
-// 1. Verifique se os imports estão no topo e com o caminho correto
-import batomImg from '../assets/batom-premium.png'; 
-import sombralImg from '../assets/sombra-premium.png';
+// Importe suas imagens aqui (ajuste o caminho conforme sua pasta)
+import batomImg from "../assets/batom-premium.png";
+import sombralImg from "../assets/sombra-premium.png"; 
 
-// 2. Garante que a exportação está limpa
 export const produtosCatalogo = [
   {
     id: 1,
-    nome: "BATOM PREMIUM",
+    nome: "BATOM ROYAL GOLD",
     preco: 229.90,
-    colecao: "Lançamentos",
-    categoria: "Batom",
-    img: batomImg // Variável que importamos acima
-  }, // <--- Verifique esta vírgula!
+    colecaoId: 1, // L'OR ESSENTIAL
+    categoria: "batons",
+    img: batomImg
+  },
   {
     id: 2,
-    nome: "RÍMEL TUBING",
+    nome: "SOMBRA IMPÉRIAL",
     preco: 259.90,
-    colecao: "Lançamentos",
-    categoria: "Rímel",
+    colecaoId: 1,
+    categoria: "pele",
     img: sombralImg
-  } // <--- O último item não precisa de vírgula, mas não tem problema se tiver
+  },
+  {
+    id: 3,
+    nome: "BATOM ROUGE SILK",
+    preco: 215.00,
+    colecaoId: 2, // HÉRITAGE DE SOIE
+    categoria: "batons",
+    img: batomImg
+  },
+  {
+    id: 4,
+    nome: "ILUMINADOR VELVET",
+    preco: 310.00,
+    colecaoId: 3, // VELOURS IMPÉRIAL
+    categoria: "pele",
+    img: sombralImg
+  },
+  {
+    id: 5,
+    nome: "BATOM NUDE SATIN",
+    preco: 198.00,
+    colecaoId: 1,
+    categoria: "batons",
+    img: batomImg
+  },
+  {
+    id: 6,
+    nome: "PÓ COMPACTO ÉCLAT",
+    preco: 285.00,
+    colecaoId: 2,
+    categoria: "pele",
+    img: sombralImg
+  },
+  {
+    id: 7,
+    nome: "GLOSS CRYSTAL",
+    preco: 155.00,
+    colecaoId: 3,
+    categoria: "batons",
+    img: batomImg
+  },
+  {
+    id: 8,
+    nome: "BASE FLUIDA SOIE",
+    preco: 340.00,
+    colecaoId: 2,
+    categoria: "pele",
+    img: sombralImg
+  },
+  {
+    id: 9,
+    nome: "BATOM MATTE NOIR",
+    preco: 229.90,
+    colecaoId: 1,
+    categoria: "batons",
+    img: batomImg
+  },
+  {
+    id: 10,
+    nome: "CORRETIVO LUMIÈRE",
+    preco: 189.00,
+    colecaoId: 3,
+    categoria: "pele",
+    img: sombralImg
+  },
+  {
+    id: 11,
+    nome: "BATOM ORCHIDEE",
+    preco: 245.00,
+    colecaoId: 2,
+    categoria: "batons",
+    img: batomImg
+  },
+  {
+    id: 12,
+    nome: "PALETA HÉRITAGE",
+    preco: 450.00,
+    colecaoId: 1,
+    categoria: "pele",
+    img: sombralImg
+  }
 ];
