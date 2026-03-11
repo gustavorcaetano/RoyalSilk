@@ -166,34 +166,47 @@
 /* --- RESPONSIVIDADE (MOBILE) --- */
 .mobile-only { display: none; }
 
+/* No Mobile, a cápsula expande para a tela toda */
 @media (max-width: 768px) {
-  .hide-on-mobile { display: none !important; }
-  .mobile-only { display: flex; }
-  
-  .hamburger-btn {
-    position: absolute;
-    left: 10px;
-    top: 15px;
-    background: var(--bg-card);
-    border: 1px solid var(--borda-dourada);
-    padding: 8px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .bar { width: 20px; height: 2px; background: var(--gold); transition: 0.3s; }
-
   .nav-capsule.mobile-open {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     border-radius: 0;
-    background: var(--bg-principal);
+    background: var(--bg-principal); /* Cor sólida para não vazar o fundo */
     flex-direction: column;
-    padding-top: 80px;
-    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+    gap: 30px;
+    transform: none;
+    z-index: 9998;
+  }
+
+  /* Faz as barras do hambúrguer virarem um X */
+  .bar.open:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .bar.open:nth-child(2) { opacity: 0; }
+  .bar.open:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .mobile-menu-extra {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .mobile-menu-extra a {
+    color: var(--gold);
+    font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    text-decoration: none;
+  }
+  
+  .hamburger-btn {
+    z-index: 10000; /* Garante que fique acima de tudo */
+    background: transparent;
+    border: none;
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from '../context/CartContext';
 import { Link } from "react-router-dom";
+
 import "../componentsCss/Navbar.css";
 
 import logoIcon from "../assets/logo.png";
@@ -10,6 +11,8 @@ import storeIcon from "../assets/icone-compra.png";
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  
 
     // Dentro do seu componente Navbar:
   const { cart } = useCart();
