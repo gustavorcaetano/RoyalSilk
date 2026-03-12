@@ -1,4 +1,9 @@
 /* --- CONFIGURAÇÕES BASE --- */
+:root {
+  --gold: #D4AF37;
+  --borda-dourada: rgba(212, 175, 55, 0.3);
+}
+
 .navbar-container {
   position: fixed;
   top: 20px;
@@ -9,55 +14,41 @@
   flex-direction: column;
   align-items: center;
   transition: 0.5s ease;
-  width: auto; /* Deixe auto para não ocupar a tela toda se não precisar */
-  background: transparent; /* GARANTE QUE NÃO HAJA FAIXA PRETA NO TOPO */
+  width: auto;
+  background: transparent;
 }
 
 .nav-capsule {
   display: flex;
   align-items: center;
   gap: 30px;
-  /* Melhorei o background para aceitar o tema claro */
   background: var(--nav-bg, rgba(255, 255, 255, 0.1)); 
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   border: 1px solid var(--borda-dourada);
-  /* Sombra mais suave para o modo claro */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
   padding: 12px 45px;
   border-radius: 50px;
   transition: all 0.5s ease;
+  position: relative; /* Importante para o alinhamento do botão no mobile */
 }
 
-/* --- ESTADO COMPACTO (AO DAR SCROLL) --- */
+/* --- ESTADO COMPACTO (SCROLL) --- */
 .nav-compact .nav-capsule {
   padding: 8px 25px;
   gap: 15px;
-  /* No scroll, o vidro fica um pouco mais opaco para leitura */
   background: var(--nav-bg-compact, rgba(255, 255, 255, 0.2));
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
-
-/* O resto do seu CSS (Links, Logos, Ícones) está correto e pode continuar igual */
 
 .nav-compact .hide-on-mobile {
   width: 0;
   opacity: 0;
   overflow: hidden;
   white-space: nowrap;
-  transition: all 0.4s ease;
 }
 
 .nav-compact:hover .hide-on-mobile {
   width: auto;
-  opacity: 1;
-}
-.nav-compact .nav-icon-link{
-  display: none;
-  opacity: 0;
-}
-.nav-compact:hover .nav-icon-link{
-  display: flex;
   opacity: 1;
 }
 
@@ -74,24 +65,22 @@
 .logo-img-inside { 
   height: 40px; 
   transition: 0.3s; 
-  /* Filtro para a logo não sumir no fundo branco (opcional) */
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
 }
 
 .nav-icons { 
   height: 22px; 
   cursor: pointer; 
-  /* Filtro para inverter cor do ícone no tema claro se necessário */
-  filter: var(--icon-filter); 
 }
-.nav-icon-link{
+
+.nav-icon-link {
   padding: 5px;
   border: 2px solid transparent;
   border-radius: 25px;
-  transition: infinite 3s all;
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
 }
-
-
 
 .royal-silk-text-under {
   color: var(--gold);
@@ -103,33 +92,11 @@
 }
 
 /* --- HOVERS --- */
-.nav-text-container {
-  padding: 5px 10px;
-  transition: all 0.3s ease;
-  border-radius: 20px;
-}
-
-.nav-text-container:hover {
+.nav-text-container:hover, .nav-icon-link:hover {
   background: rgba(212, 175, 55, 0.1);
-  padding: 8px;
-  border: 2px solid  var(--borda-dourada);
-  transition: infinite 2s all;
-}
-
-
-.nav-icon-link:hover{
-  padding: 8px;
   border: 2px solid var(--borda-dourada);
-  background-color: rgba(212, 175, 55, 0.1);;
-  border-radius: 50px;
-  transition: infinite 3s ease;
+  border-radius: 25px;
 }
-.nav-link-text:hover{
-  padding: 8px;
-  border-radius: 50px;
-  transition: infinite 3s ease;
-}
-
 
 .nav-icon-wrapper {
   position: relative;
@@ -141,7 +108,7 @@
   position: absolute;
   top: -8px;
   right: -8px;
-  background-color: #ff4d4d; /* Vermelho de notificação */
+  background-color: #ff4d4d;
   color: white;
   font-size: 0.65rem;
   font-weight: bold;
@@ -151,102 +118,85 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--bg-principal);
-  animation: popIn 0.3s ease-out;
+  border: 2px solid white;
 }
-
-@keyframes popIn {
-  0% { transform: scale(0); }
-  80% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-
 
 /* --- RESPONSIVIDADE (MOBILE) --- */
 .mobile-only { display: none; }
 
-/* --- BOTÃO HAMBÚRGUER --- */
-.hamburger-btn {
-  display: none; /* Escondido por padrão */
-  flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 18px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 10001;
-  padding: 0;
-}
-
-.bar {
-  width: 100%;
-  height: 2px;
-  background: var(--gold);
-  transition: 0.3s;
-}
-
-/* Responsividade Mobile */
 @media (max-width: 768px) {
   .mobile-only { display: flex !important; }
   .hide-on-mobile { display: none !important; }
 
-  /* Navbar Container no Mobile */
   .navbar-container {
     width: 100%;
     top: 15px;
     left: 0;
-    transform: none; /* Crucial: Remove a centralização do desktop */
-    padding: 0 20px;
+    transform: none;
+    padding: 0 20px; /* Mantém a distância das laterais no scroll */
     box-sizing: border-box;
   }
 
-  /* Botão Hambúrguer posicionado à esquerda */
-  .hamburger-btn {
-    display: flex;
-    position: absolute;
-    left: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10001; /* Fica acima do overlay preto */
-  }
-
-  /* Cápsula no Mobile: vira uma barra transparente simples para a logo */
   .nav-capsule {
     width: 100%;
-    padding: 10px;
-    gap: 0;
-    justify-content: center; /* Centraliza apenas a logo */
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 40px;
+    padding: 10px 0;
+    justify-content: center; /* Garante a logo centralizada */
+    height: 60px;
+    box-sizing: border-box;
   }
 
-  /* Menu Aberto: Expande para TELA CHEIA PRETA */
+  .hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* Alinhamento vertical perfeito com a logo */
+    width: 28px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10001;
+    padding: 0;
+  }
+
+  .bar {
+    width: 100%;
+    height: 2px;
+    background: var(--gold);
+    transition: 0.3s;
+  }
+
+  /* Quando o menu abre */
   .nav-capsule.mobile-open {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #000000 !important; /* Fundo conforme imagem enviada */
+    background: #000000 !important;
     border: none;
     border-radius: 0;
     flex-direction: column;
-    padding-top: 120px; /* Dá espaço para a logo no topo */
+    padding-top: 100px;
     z-index: 10000;
-    backdrop-filter: none;
   }
 
-  /* Alinhamento da Logo no topo do menu aberto */
   .nav-capsule.mobile-open .nav-logo {
     position: absolute;
-    top: 40px;
+    top: 30px;
     left: 50%;
     transform: translateX(-50%);
   }
 
-  /* Links no centro do menu preto */
+  .mobile-menu-active .hamburger-btn {
+    position: fixed; 
+    top: 35px;
+    left: 30px;
+  }
+
   .mobile-links-wrapper {
     display: flex;
     flex-direction: column;
@@ -256,7 +206,6 @@
 
   .mobile-links-wrapper a {
     color: var(--gold);
-    font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
     text-decoration: none;
     letter-spacing: 4px;
@@ -271,7 +220,6 @@
     margin-top: 15px;
   }
 
-  /* Branding no rodapé do menu */
   .mobile-footer-brand {
     position: absolute;
     bottom: 50px;
@@ -281,7 +229,6 @@
     opacity: 0.5;
   }
 
-  /* Animação do X (Hambúrguer) */
   .bar.open:nth-child(1) { transform: translateY(8px) rotate(45deg); }
   .bar.open:nth-child(2) { opacity: 0; }
   .bar.open:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }

@@ -23,16 +23,16 @@ export const Navbar = () => {
   return (
     <nav className={`navbar-container ${isScrolled ? "nav-compact" : "nav-full"} ${isMenuOpen ? "mobile-menu-active" : ""}`}>
       
-      {/* Botão Hambúrguer - Visível apenas no Mobile */}
-      <button className="hamburger-btn mobile-only" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-        <span className={`bar ${isMenuOpen ? "open" : ""}`}></span>
-        <span className={`bar ${isMenuOpen ? "open" : ""}`}></span>
-        <span className={`bar ${isMenuOpen ? "open" : ""}`}></span>
-      </button>
-
+      {/* Botão Hambúrguer movido para dentro da cápsula para melhor alinhamento no mobile */}
       <div className={`nav-capsule ${isMenuOpen ? "mobile-open" : ""}`}>
         
-        {/* Estrutura Desktop (Mantida) */}
+        <button className="hamburger-btn mobile-only" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <span className={`bar ${isMenuOpen ? "open" : ""}`}></span>
+          <span className={`bar ${isMenuOpen ? "open" : ""}`}></span>
+          <span className={`bar ${isMenuOpen ? "open" : ""}`}></span>
+        </button>
+
+        {/* Desktop Links */}
         <div className="nav-text-container hide-on-mobile">
           <Link to="/catalogo" className="nav-link-text">CATÁLOGO</Link>
         </div>
@@ -59,7 +59,7 @@ export const Navbar = () => {
           <Link to="/ofertas" className="nav-link-text">OFERTAS</Link>
         </div>
 
-        {/* OVERLAY MOBILE - Estilo da Imagem */}
+        {/* Overlay Menu Mobile */}
         {isMenuOpen && (
           <div className="mobile-menu-content mobile-only">
             <div className="mobile-links-wrapper">
@@ -67,7 +67,6 @@ export const Navbar = () => {
               <Link to="/catalogo" onClick={closeMenu}>CATÁLOGO</Link>
               <Link to="/ofertas" onClick={closeMenu}>OFERTAS</Link>
               <Link to="/usuario" onClick={closeMenu}>MINHA CONTA</Link>
-              
               <Link to="/carrinho" onClick={closeMenu} className="mobile-cart-btn">
                 CARRINHO ({totalItems})
               </Link>
