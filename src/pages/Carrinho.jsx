@@ -1,11 +1,37 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext'; // Importação corrigida
+import { useNavigate, Link } from 'react-router-dom'; // Importação corrigida
 import { motion, AnimatePresence } from 'framer-motion';
 import '../pagesCss/Carrinho.css';
 
 export const Carrinho = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
+  const { usuarioLogado } = useAuth();
+  const navigate = useNavigate();
+
+  // Cálculo do subtotal dinâmico
   const subtotal = cart.reduce((acc, item) => acc + (item.preco * item.quantity), 0);
+
+  // Se o usuário não estiver logado, exibe a trava de segurança
+  if (!usuarioLogado) {
+    return (
+      <div className="cart-master-container forbidden-view">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          className="auth-needed-card"
+        >
+          <div className="gold-lock-icon" style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔒</div>
+          <h2>ACESSO RESTRITO</h2>
+          <p>Seu carrinho é um espaço pessoal e seguro. Faça login para acessar seus itens salvos.</p>
+          <button className="btn-gold-silk" onClick={() => navigate("/usuario")}>
+            ACESSAR MINHA CONTA
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="cart-master-container">
@@ -18,7 +44,8 @@ export const Carrinho = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <p>Sua sacola está vazia.</p>
-          <a href="/catalogo" className="btn-text-buy">VOLTAR À BOUTIQUE</a>
+          {/* Usando Link para navegação interna mais fluida */}
+          <Link to="/catalogo" className="btn-text-buy">VOLTAR À BOUTIQUE</Link>
         </motion.div>
       ) : (
         <div className="cart-content-grid">
@@ -66,7 +93,7 @@ export const Carrinho = () => {
               </div>
               <div className="summary-row">
                 <span>Frete</span>
-                <span style={{ color: '#D4AF37' }}>GRÁTIS</span>
+                <span style={{ color: '#D4AF37', fontWeight: 'bold' }}>GRÁTIS</span>
               </div>
               <div className="summary-row total">
                 <span>TOTAL</span>
