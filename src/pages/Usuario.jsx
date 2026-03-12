@@ -1,53 +1,81 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import "../pagesCss/Usuario.css";
 
 export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) => {
   const [estaLogado, setEstaLogado] = useState(false);
   const [abaAtual, setAbaAtual] = useState("login");
-  const [user, setUser] = useState({ nome: "", email: "", cep: "", nascimento: "", cartao: "" });
+  const [loadingCep, setLoadingCep] = useState(false);
+  
+  const [user, setUser] = useState({
+    nome: "", email: "", nascimento: "", cartao: "",
+    cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", estado: ""
+  });
 
-  const enviarBoasVindas = (nome, email) => {
-    const templateParams = {
-      user_name: nome,
-      user_email: email,
-      date: new Date().toLocaleDateString('pt-BR')
-    };
+  // --- BUSCA AUTOMÁTICA DE CEP ---
+  useEffect(() => {
+    const cepLimpo = user.cep.replace(/\D/g, "");
+    if (cepLimpo.length === 8) {
+      setLoadingCep(true);
+      fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
+        .then(res => res.json())
+        .then(data => {
+          if (!data.erro) {
+            setUser(prev => ({
+              ...prev,
+              rua: data.logradouro,
+              bairro: data.bairro,
+              cidade: data.localidade,
+              estado: data.uf
+            }));
+          }
+          setLoadingCep(false);
+        })
+        .catch(() => setLoadingCep(false));
+    }
+  }, [user.cep]);
 
-    emailjs.send(
-      'service_be82pnn', 
-      'template_4bochio', 
-      templateParams, 
-      'y3Tnpbz2zKLZfn-G7' 
-    ).then(() => console.log("E-mail Royal Silk enviado com sucesso!"));
+  // --- MÁSCARAS DE INPUT ---
+  const handleCepChange = (e) => {
+    let val = e.target.value.replace(/\D/g, "");
+    if (val.length > 8) val = val.slice(0, 8);
+    val = val.replace(/^(\d{5})(\d)/, "$1-$2");
+    setUser({ ...user, cep: val });
+  };
+
+  const handleDataChange = (e) => {
+    let val = e.target.value.replace(/\D/g, "");
+    if (val.length > 8) val = val.slice(0, 8);
+    val = val.replace(/^(\d{2})(\d)/, "$1/$2");
+    val = val.replace(/(\d{2})(\d)/, "$1/$2");
+    setUser({ ...user, nascimento: val });
   };
 
   const handleCadastro = (e) => {
     e.preventDefault();
     setEstaLogado(true);
     setAbaAtual("perfil");
-    enviarBoasVindas(user.nome, user.email);
+    // enviarBoasVindas(user.nome, user.email);
+  };
+
+  // Variantes para animação de Slide
+  const slideVariants = {
+    initial: { opacity: 0, x: 20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -20 }
   };
 
   if (!estaLogado) {
     return (
       <div className="usuario-container">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }} 
-          animate={{ opacity: 1, y: 0 }}
-          className="logo-container"
-        >
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="logo-container">
           <img src="https://raw.githubusercontent.com/gustavorcaetano/RoyalSilk/main/src/assets/ROYALSILK.png" alt="Logo" className="logo-auth" />
           <h1 className="logo-text">Royal Silk</h1>
           <p className="logo-subtitle">O PODER DA BELEZA REAL</p>
         </motion.div>
 
-        <motion.div 
-          className="auth-card"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-        >
+        <motion.div className="auth-card" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
           <div className="auth-tabs">
             <span onClick={() => setAbaAtual("login")} className={abaAtual === "login" ? "active" : ""}>LOGIN</span>
             <span onClick={() => setAbaAtual("cadastro")} className={abaAtual === "cadastro" ? "active" : ""}>CADASTRO</span>
@@ -55,12 +83,29 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
 
           <form className="auth-form" onSubmit={handleCadastro}>
             {abaAtual === "cadastro" && (
-              <>
+              <div className="form-scroll-area">
                 <input type="text" placeholder="NOME COMPLETO" required onChange={(e) => setUser({...user, nome: e.target.value})} />
-                <input type="text" placeholder="DATA DE NASCIMENTO" required onChange={(e) => setUser({...user, nascimento: e.target.value})} />
-                <input type="text" placeholder="CEP" required onChange={(e) => setUser({...user, cep: e.target.value})} />
-              </>
+                <div className="input-group">
+                  <input type="text" placeholder="NASCIMENTO (DD/MM/AAAA)" value={user.nascimento} onChange={handleDataChange} inputMode="numeric" required />
+                  <input type="text" placeholder="CEP" value={user.cep} onChange={handleCepChange} inputMode="numeric" required />
+                </div>
+                
+                {loadingCep && <p className="loading-text">Buscando endereço...</p>}
+                
+                <input type="text" placeholder="RUA / LOGRADOURO" value={user.rua} required onChange={(e) => setUser({...user, rua: e.target.value})} />
+                
+                <div className="input-group">
+                  <input type="text" placeholder="Nº" required onChange={(e) => setUser({...user, numero: e.target.value})} />
+                  <input type="text" placeholder="COMPLEMENTO" onChange={(e) => setUser({...user, complemento: e.target.value})} />
+                </div>
+
+                <div className="input-group">
+                  <input type="text" placeholder="BAIRRO" value={user.bairro} required onChange={(e) => setUser({...user, bairro: e.target.value})} />
+                  <input type="text" placeholder="CIDADE" value={user.cidade} required readOnly />
+                </div>
+              </div>
             )}
+            
             <input type="email" placeholder="E-MAIL" required onChange={(e) => setUser({...user, email: e.target.value})} />
             <input type="password" placeholder="SENHA" required />
             
@@ -83,48 +128,60 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
       </aside>
 
       <main className="content-perfil">
-        {abaAtual === "perfil" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="perfil-title">BEM-VINDO, {user.nome.toUpperCase()}</h2>
-            <div className="info-box">
-              <p><strong>E-MAIL:</strong> {user.email}</p>
-              <p><strong>CEP:</strong> {user.cep}</p>
-              <p><strong>NASCIMENTO:</strong> {user.nascimento}</p>
-            </div>
-          </motion.div>
-        )}
-
-        {abaAtual === "pagamento" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="perfil-title">MÉTODOS DE PAGAMENTO</h2>
-            <div className="card-box">
-              <p>CARTÃO ATUAL: {user.cartao || "NENHUM CADASTRADO"}</p>
-              <input type="text" className="input-gold" placeholder="NÚMERO DO CARTÃO" onChange={(e) => setUser({...user, cartao: e.target.value})} />
-              <p className="pix-label">OPÇÃO PIX ATIVA ✓</p>
-            </div>
-          </motion.div>
-        )}
-
-        {abaAtual === "config" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="perfil-title">ACESSIBILIDADE</h2>
-            <div className="config-container">
-              <div className="config-item">
-                <p>TAMANHO DA FONTE: {fontSize}px</p>
-                <div className="btn-group">
-                  <button onClick={() => setFontSize(fontSize + 2)}>+</button>
-                  <button onClick={() => setFontSize(fontSize - 2)}>-</button>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={abaAtual}
+            variants={slideVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.3 }}
+          >
+            {abaAtual === "perfil" && (
+              <div className="perfil-content-box">
+                <h2 className="perfil-title">BEM-VINDO, {user.nome.toUpperCase()}</h2>
+                <div className="info-box">
+                  <p><strong>E-MAIL:</strong> {user.email}</p>
+                  <p><strong>ENDEREÇO:</strong> {user.rua}, {user.numero}</p>
+                  <p><strong>LOCALIDADE:</strong> {user.bairro} - {user.cidade}/{user.estado}</p>
+                  <p><strong>NASCIMENTO:</strong> {user.nascimento}</p>
                 </div>
               </div>
-              <div className="config-item">
-                <p>TEMA DO SITE</p>
-                <button className="btn-theme-toggle" onClick={() => setTemaEscuro(!temaEscuro)}>
-                  MODO {temaEscuro ? "CLARO" : "ESCURO"}
-                </button>
+            )}
+
+            {abaAtual === "pagamento" && (
+              <div className="perfil-content-box">
+                <h2 className="perfil-title">MÉTODOS DE PAGAMENTO</h2>
+                <div className="card-box">
+                  <p>CARTÃO ATUAL: {user.cartao || "NENHUM CADASTRADO"}</p>
+                  <input type="text" className="input-gold" placeholder="NÚMERO DO CARTÃO" onChange={(e) => setUser({...user, cartao: e.target.value})} />
+                  <p className="pix-label">OPÇÃO PIX ATIVA ✓</p>
+                </div>
               </div>
-            </div>
+            )}
+
+            {abaAtual === "config" && (
+              <div className="perfil-content-box">
+                <h2 className="perfil-title">ACESSIBILIDADE</h2>
+                <div className="config-container">
+                  <div className="config-item">
+                    <p>TAMANHO DA FONTE: {fontSize}px</p>
+                    <div className="btn-group">
+                      <button onClick={() => setFontSize(fontSize + 2)}>+</button>
+                      <button onClick={() => setFontSize(fontSize - 2)}>-</button>
+                    </div>
+                  </div>
+                  <div className="config-item">
+                    <p>TEMA DO SITE</p>
+                    <button className="btn-theme-toggle" onClick={() => setTemaEscuro(!temaEscuro)}>
+                      MODO {temaEscuro ? "CLARO" : "ESCURO"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </motion.div>
-        )}
+        </AnimatePresence>
       </main>
     </div>
   );

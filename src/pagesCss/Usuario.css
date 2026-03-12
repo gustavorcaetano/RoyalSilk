@@ -171,52 +171,100 @@
   cursor: pointer;
 }
 
-/* --- RESPONSIVIDADE PERFIL --- */
 
+
+/* --- RESPONSIVIDADE PERFIL --- */
+/* Feedback do endereço aparecendo */
+.address-preview {
+  font-size: 0.65rem;
+  color: var(--gold);
+  margin-top: -10px;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+/* Garante que o conteúdo do perfil não quebre o layout no slide */
+.content-perfil {
+  overflow-x: hidden; /* Evita scroll horizontal na animação */
+  position: relative;
+  min-height: 400px;
+}
+
+/* --- COMPLEMENTOS PARA O FORMULÁRIO --- */
+.input-group {
+  display: flex;
+  gap: 15px;
+}
+
+.input-group input {
+  flex: 1;
+  width: 100%;
+}
+
+.form-scroll-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Custom Scrollbar para o formulário */
+.form-scroll-area::-webkit-scrollbar { width: 4px; }
+.form-scroll-area::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+.loading-text {
+  font-size: 0.6rem;
+  color: var(--gold);
+  margin: -10px 0;
+  font-style: italic;
+}
+
+.address-preview {
+  font-size: 0.7rem;
+  color: #888;
+  margin-top: -10px;
+}
+
+/* Layout Perfil Responsivo (Aprimorado) */
 @media (max-width: 900px) {
   .perfil-layout {
-    grid-template-columns: 1fr; /* Muda de 2 colunas para 1 */
-    gap: 30px;
+    grid-template-columns: 1fr;
     padding: 120px 20px 50px;
+    gap: 30px;
   }
 
-  .sidebar-perfil {
+  sidebar-perfil {
     border-right: none;
     border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-    flex-direction: row; /* Menu horizontal no mobile */
+    flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap; /* Caso tenha muitos itens, eles quebram a linha */
+    flex-wrap: wrap;
     padding-bottom: 20px;
     gap: 15px;
   }
 
   .sidebar-perfil p {
-    margin: 0;
-    padding: 5px 10px;
-    border: 1px solid transparent;
+    font-size: 0.65rem;
+    padding: 8px 12px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 20px;
   }
+  .sidebar-perfil p { margin: 0; padding: 5px 10px; }
+  .sidebar-perfil .active { border-bottom: 2px solid var(--gold); }
+  .btn-sair { margin-top: 0; height: fit-content; }
+
 
   .sidebar-perfil .active {
-    border: 1px solid var(--borda-dourada);
-    border-radius: 5px;
-  }
-
-  .btn-sair {
-    margin-top: 0; /* Remove o espaço grande no mobile */
-    padding: 5px 15px;
-  }
-
-  .perfil-title {
-    font-size: 1.2rem;
-    text-align: center;
-  }
-
-  .info-box, .card-box {
-    padding: 20px;
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--gold);
   }
 }
 
 @media (max-width: 480px) {
+  .input-group { flex-direction: column; gap: 20px; }
+  .auth-card { padding: 40px 20px; }
   /* Ajustes para celulares muito pequenos */
   .usuario-container {
     padding-top: 100px;
