@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import "../componentsCss/Usuario.css";
+import "../pagesCss/Usuario.css";
 
 export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) => {
   const [estaLogado, setEstaLogado] = useState(false);
