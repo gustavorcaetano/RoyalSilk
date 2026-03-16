@@ -1,0 +1,30 @@
+{
+  "short_name": "Royal Silk",
+  "name": "Royal Silk Cosmetics",
+  "description": "Premium Cosmetics Store",
+  "icons": [
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-wide.png",
+      "sizes": "2880x1502",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "896x1334",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1d1c1c",
+  "background_color": "#1d1c1c"
+}
