@@ -3,14 +3,63 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import "../pagesCss/Usuario.css";
 
+// --- COMPONENTE DO OLHO ANIMADO (Declarado fora para evitar hoisting) ---
+const IconeOlhoAnimado = ({ visivel, toggle }) => (
+  <button
+    type="button"
+    className="btn-toggle-senha"
+    onClick={toggle}
+    aria-label={visivel ? "Ocultar senha" : "Exibir senha"}
+  >
+    <svg 
+      width="20" 
+      height="20" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="#D4AF37" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <motion.path
+        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+        animate={{ scaleY: visivel ? 1 : 0.4 }}
+        transition={{ duration: 0.2 }}
+      />
+      <motion.circle 
+        cx="12" 
+        cy="12" 
+        r="3" 
+        animate={{ scale: visivel ? 1 : 0.6 }} 
+        transition={{ duration: 0.2 }}
+      />
+      {!visivel && (
+        <motion.line
+          x1="3"
+          y1="3"
+          x2="21"
+          y2="21"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 0.2 }}
+        />
+      )}
+    </svg>
+  </button>
+);
+
 export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) => {
   const { usuarioLogado, login, logout } = useAuth();
   const [abaAtual, setAbaAtual] = useState("login");
   const [loadingCep, setLoadingCep] = useState(false);
   const [lembrar, setLembrar] = useState(true);
+
+  // ESTADOS DE VISIBILIDADE DAS SENHAS
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [mostrarConfirmaSenha, setMostrarConfirmaSenha] = useState(false);
   
   const [user, setUser] = useState({
-    nome: "", email: "", nascimento: "", cartao: "",
+    nome: "", email: "", senha: "", confirmaSenha: "", nascimento: "", cartao: "",
     cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", estado: ""
   });
 
@@ -56,13 +105,24 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
   const handleDataChange = (e) => {
     let val = e.target.value.replace(/\D/g, "");
     if (val.length > 8) val = val.slice(0, 8);
-    val = val.replace(/^(\d{2})(\d)/, "$1/$2");
-    val = val.replace(/(\d{2})(\d{2})(\d)/, "$1/$2/$3");
+
+    if (val.length > 4) {
+      val = val.replace(/^(\d{2})(\d{2})(\d{1,4})$/, "$1/$2/$3");
+    } else if (val.length > 2) {
+      val = val.replace(/^(\d{2})(\d{1,2})$/, "$1/$2");
+    }
+
     setUser({ ...user, nascimento: val });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (abaAtual === "cadastro" && user.senha !== user.confirmaSenha) {
+      alert("As senhas informadas não coincidem.");
+      return;
+    }
+
     login({ 
       nome: user.nome || "Membro Royal", 
       email: user.email,
@@ -103,9 +163,62 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
           <form className="auth-form" onSubmit={handleSubmit}>
             {abaAtual === "cadastro" ? (
               <div className="form-scroll-area">
-                <input type="text" placeholder="NOME COMPLETO" required onChange={(e) => setUser({...user, nome: e.target.value})} />
+                <input 
+                  type="text" 
+                  placeholder="NOME COMPLETO" 
+                  value={user.nome} 
+                  required 
+                  onChange={(e) => setUser({...user, nome: e.target.value})} 
+                />
+                
+                <input 
+                  type="email" 
+                  placeholder="E-MAIL" 
+                  value={user.email} 
+                  required 
+                  onChange={(e) => setUser({...user, email: e.target.value})} 
+                />
+                
                 <div className="input-group">
-                  <input type="text" placeholder="NASCIMENTO" value={user.nascimento} onChange={handleDataChange} inputMode="numeric" required />
+                  <div className="input-senha-wrapper">
+                    <input 
+                      type={mostrarSenha ? "text" : "password"} 
+                      placeholder="SENHA" 
+                      value={user.senha} 
+                      required 
+                      onChange={(e) => setUser({...user, senha: e.target.value})} 
+                    />
+                    <IconeOlhoAnimado 
+                      visivel={mostrarSenha} 
+                      toggle={() => setMostrarSenha(!mostrarSenha)} 
+                    />
+                  </div>
+
+                  <div className="input-senha-wrapper">
+                    <input 
+                      type={mostrarConfirmaSenha ? "text" : "password"} 
+                      placeholder="CONFIRMAR SENHA" 
+                      value={user.confirmaSenha} 
+                      required 
+                      onChange={(e) => setUser({...user, confirmaSenha: e.target.value})} 
+                    />
+                    <IconeOlhoAnimado 
+                      visivel={mostrarConfirmaSenha} 
+                      toggle={() => setMostrarConfirmaSenha(!mostrarConfirmaSenha)} 
+                    />
+                  </div>
+                </div>
+
+                <div className="input-group">
+                  <input 
+                    type="text" 
+                    placeholder="NASCIMENTO (DD/MM/AAAA)" 
+                    value={user.nascimento} 
+                    onChange={handleDataChange} 
+                    inputMode="numeric" 
+                    maxLength={10} 
+                    required 
+                  />
                   <input type="text" placeholder="CEP" value={user.cep} onChange={handleCepChange} inputMode="numeric" required />
                 </div>
                 
@@ -125,8 +238,27 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
               </div>
             ) : (
               <>
-                <input type="email" placeholder="E-MAIL" required onChange={(e) => setUser({...user, email: e.target.value})} />
-                <input type="password" placeholder="SENHA" required />
+                <input 
+                  type="email" 
+                  placeholder="E-MAIL" 
+                  value={user.email} 
+                  required 
+                  onChange={(e) => setUser({...user, email: e.target.value})} 
+                />
+                
+                <div className="input-senha-wrapper">
+                  <input 
+                    type={mostrarSenha ? "text" : "password"} 
+                    placeholder="SENHA" 
+                    value={user.senha} 
+                    required 
+                    onChange={(e) => setUser({...user, senha: e.target.value})} 
+                  />
+                  <IconeOlhoAnimado 
+                    visivel={mostrarSenha} 
+                    toggle={() => setMostrarSenha(!mostrarSenha)} 
+                  />
+                </div>
               </>
             )}
 

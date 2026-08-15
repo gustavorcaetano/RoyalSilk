@@ -227,6 +227,39 @@
   margin-top: -10px;
 }
 
+/* Container que alinha o input e o ícone do olho */
+.input-senha-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.input-senha-wrapper input {
+  width: 100%;
+  padding-right: 38px !important; /* Evita que o texto digitado passe por baixo do olho */
+}
+
+/* Botão transparente do olho posicionado à direita */
+.btn-toggle-senha {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  outline: none;
+  transition: transform 0.2s ease;
+  z-index: 2;
+}
+
+.btn-toggle-senha:hover {
+  transform: scale(1.1);
+}
+
 /* Layout Perfil Responsivo (Aprimorado) */
 @media (max-width: 900px) {
   .perfil-layout {
