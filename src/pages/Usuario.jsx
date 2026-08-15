@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import "../pagesCss/Usuario.css";
 
-// --- COMPONENTE DO OLHO ANIMADO (Declarado fora para evitar hoisting) ---
+// --- COMPONENTE DO OLHO ANIMADO ---
 const IconeOlhoAnimado = ({ visivel, toggle }) => (
   <button
     type="button"
@@ -54,6 +54,9 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
   const [loadingCep, setLoadingCep] = useState(false);
   const [lembrar, setLembrar] = useState(true);
 
+  // ESTADO DE EDIÇÃO DO PERFIL
+  const [editando, setEditando] = useState(false);
+
   // ESTADOS DE VISIBILIDADE DAS SENHAS
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [mostrarConfirmaSenha, setMostrarConfirmaSenha] = useState(false);
@@ -62,6 +65,25 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
     nome: "", email: "", senha: "", confirmaSenha: "", nascimento: "", cartao: "",
     cep: "", rua: "", numero: "", complemento: "", bairro: "", cidade: "", estado: ""
   });
+
+  // PREENCHE O FORMULÁRIO QUANDO O USUÁRIO LOGA OU ALTERA DADOS
+  useEffect(() => {
+    if (usuarioLogado) {
+      setUser(prev => ({
+        ...prev,
+        nome: usuarioLogado.nome || "",
+        email: usuarioLogado.email || "",
+        rua: usuarioLogado.rua || "",
+        numero: usuarioLogado.numero || "",
+        complemento: usuarioLogado.complemento || "",
+        bairro: usuarioLogado.bairro || "",
+        cidade: usuarioLogado.cidade || "",
+        estado: usuarioLogado.estado || "",
+        nascimento: usuarioLogado.nascimento || "",
+        cartao: usuarioLogado.cartao || ""
+      }));
+    }
+  }, [usuarioLogado]);
 
   // --- BUSCA E LIMPEZA AUTOMÁTICA DE CEP ---
   useEffect(() => {
@@ -128,6 +150,7 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
       email: user.email,
       rua: user.rua,
       numero: user.numero,
+      complemento: user.complemento,
       bairro: user.bairro,
       cidade: user.cidade,
       estado: user.estado,
@@ -136,6 +159,24 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
     }, lembrar);
     
     setAbaAtual("perfil");
+  };
+
+  const handleSalvarPerfil = (e) => {
+    e.preventDefault();
+    login({
+      ...usuarioLogado,
+      nome: user.nome,
+      email: user.email,
+      rua: user.rua,
+      numero: user.numero,
+      complemento: user.complemento,
+      bairro: user.bairro,
+      cidade: user.cidade,
+      estado: user.estado,
+      nascimento: user.nascimento
+    }, lembrar);
+
+    setEditando(false);
   };
 
   const slideVariants = {
@@ -290,16 +331,114 @@ export const Usuario = ({ temaEscuro, setTemaEscuro, fontSize, setFontSize }) =>
         <AnimatePresence mode="wait">
           <motion.div key={abaAtual} variants={slideVariants} initial="initial" animate="animate" exit="exit" transition={{ duration: 0.3 }}>
             
-            {/* ABA PERFIL */}
+            {/* ABA PERFIL (MODO VISUALIZAÇÃO E EDIÇÃO) */}
             {abaAtual === "perfil" && (
               <div className="perfil-content-box">
                 <h2 className="perfil-title">BEM-VINDO, {usuarioLogado.nome.toUpperCase()}</h2>
-                <div className="info-box">
-                  <p><strong>E-MAIL:</strong> {usuarioLogado.email}</p>
-                  <p><strong>ENDEREÇO:</strong> {usuarioLogado.rua}, {usuarioLogado.numero} {usuarioLogado.complemento && `(${usuarioLogado.complemento})`}</p>
-                  <p><strong>LOCALIDADE:</strong> {usuarioLogado.bairro} - {usuarioLogado.cidade}/{usuarioLogado.estado}</p>
-                  <p><strong>NASCIMENTO:</strong> {usuarioLogado.nascimento}</p>
-                </div>
+
+                {!editando ? (
+                  <div className="info-box">
+                    <p><strong>NOME:</strong> {usuarioLogado.nome}</p>
+                    <p><strong>E-MAIL:</strong> {usuarioLogado.email}</p>
+                    <p><strong>ENDEREÇO:</strong> {usuarioLogado.rua}{usuarioLogado.numero ? `, ${usuarioLogado.numero}` : ""} {usuarioLogado.complemento && `(${usuarioLogado.complemento})`}</p>
+                    <p><strong>LOCALIDADE:</strong> {usuarioLogado.bairro}{usuarioLogado.cidade ? ` - ${usuarioLogado.cidade}/${usuarioLogado.estado}` : ""}</p>
+                    <p><strong>NASCIMENTO:</strong> {usuarioLogado.nascimento}</p>
+                    
+                    <button 
+                      type="button" 
+                      className="btn-gold-silk" 
+                      style={{ marginTop: '20px', width: 'auto', padding: '10px 25px' }}
+                      onClick={() => setEditando(true)}
+                    >
+                      EDITAR INFORMAÇÕES
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSalvarPerfil} className="form-editar-perfil" style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '500px', marginTop: '20px' }}>
+                    <input 
+                      type="text" 
+                      placeholder="NOME COMPLETO" 
+                      value={user.nome} 
+                      onChange={(e) => setUser({...user, nome: e.target.value})} 
+                      required 
+                    />
+                    <input 
+                      type="email" 
+                      placeholder="E-MAIL" 
+                      value={user.email} 
+                      onChange={(e) => setUser({...user, email: e.target.value})} 
+                      required 
+                    />
+                    <div className="input-group">
+                      <input 
+                        type="text" 
+                        placeholder="NASCIMENTO (DD/MM/AAAA)" 
+                        value={user.nascimento} 
+                        onChange={handleDataChange} 
+                        inputMode="numeric" 
+                        maxLength={10} 
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="BUSCAR CEP" 
+                        value={user.cep} 
+                        onChange={handleCepChange} 
+                        inputMode="numeric" 
+                      />
+                    </div>
+
+                    {loadingCep && <p style={{ color: '#D4AF37', fontSize: '0.85rem' }}>Buscando endereço...</p>}
+
+                    <input 
+                      type="text" 
+                      placeholder="RUA / LOGRADOURO" 
+                      value={user.rua} 
+                      onChange={(e) => setUser({...user, rua: e.target.value})} 
+                    />
+                    
+                    <div className="input-group">
+                      <input 
+                        type="text" 
+                        placeholder="Nº" 
+                        value={user.numero} 
+                        onChange={(e) => setUser({...user, numero: e.target.value})} 
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="COMPLEMENTO" 
+                        value={user.complemento} 
+                        onChange={(e) => setUser({...user, complemento: e.target.value})} 
+                      />
+                    </div>
+
+                    <div className="input-group">
+                      <input 
+                        type="text" 
+                        placeholder="BAIRRO" 
+                        value={user.bairro} 
+                        onChange={(e) => setUser({...user, bairro: e.target.value})} 
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="CIDADE" 
+                        value={user.cidade} 
+                        readOnly 
+                      />
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                      <button type="submit" className="btn-gold-silk">SALVAR ALTERAÇÕES</button>
+                      <button 
+                        type="button" 
+                        className="btn-gold-silk" 
+                        style={{ backgroundColor: 'transparent', border: '1px solid #D4AF37', color: '#D4AF37' }}
+                        onClick={() => setEditando(false)}
+                      >
+                        CANCELAR
+                      </button>
+                    </div>
+                  </form>
+                )}
               </div>
             )}
 

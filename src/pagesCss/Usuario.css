@@ -260,6 +260,21 @@
   transform: scale(1.1);
 }
 
+/* Formulário de edição de dados no perfil */
+.form-editar-perfil input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #D4AF37;
+  padding: 8px 0;
+  color: #333;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.form-editar-perfil input::placeholder {
+  color: #aaa;
+}
+
 /* Layout Perfil Responsivo (Aprimorado) */
 @media (max-width: 900px) {
   .perfil-layout {
